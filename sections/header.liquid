@@ -1,0 +1,480 @@
+<section class="header">
+  <div class="main-container">
+    <div class="header-content">
+      {% if section.settings.logo %}
+        <img
+          src="{{ section.settings.logo | img_url: width: 1000 }}"
+          alt="{{ shop.name }}"
+          class="logo"
+          width="100%"
+          height="100%"
+        >
+      {% else %}
+        <h1>{{ shop.name }}</h1>
+      {% endif %}
+
+      <nav class="header-nav" id="headerNav">
+        <ul class="header-list">
+          {% for block in section.blocks %}
+            {% if block.type == 'navigation_link' %}
+              <li class="{{ block.settings.class_name }}">
+                <a
+                  href="{{ block.settings.url }}"
+                  style="font-family:{{ section.settings.font_family.family | default: section.settings.font_family }}"
+                >
+                  {{- block.settings.title -}}
+                </a>
+                {% if block.settings.class_name == 'dropdown' %}
+                  <!-- Inline SVG for dropdown arrow to avoid asset issues -->
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M2 4L5 7L8 4" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% endif %}
+                {% if block.settings.class_name == 'dropdown' %}
+                  <div class="dropdown-menu" id="dropdown-{{ block.settings.link_id }}">
+                    {% assign link_id = block.settings.link_id %}
+                    {% assign dropdown_groups = section.blocks | where: 'type', 'dropdown' %}
+                    {% for dropdown in dropdown_groups %}
+                      {% if dropdown.settings.parent_id == link_id %}
+                        {% if dropdown.settings.menu_image %}
+                          <img
+                            src="{{ dropdown.settings.menu_image | image_url: width: 1000 }}"
+                            alt="menu_image"
+                            class="menu_image"
+                            width=""
+                            height=""
+                          >
+                        {% endif %}
+                        {% if dropdown.settings.group_items != blank %}
+                          <ul>
+                            {% if dropdown.settings.group_title != blank %}
+                              <li>
+                                <strong>{{ dropdown.settings.group_title }}</strong>
+                              </li>
+                            {% endif %}
+                            {% assign items = dropdown.settings.group_items | split: ',' %}
+                            {% for item in items %}
+                              <li>
+                                <a href="#">{{ item | strip }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <ul>
+          {% for block in section.blocks %}
+            {% if block.type == 'header_search' %}
+              <li>
+                <a href="#" class="header-link">
+                  <img
+                    src="{{ block.settings.image | img_url: width: "1000" }}"
+                    width="20"
+                    height="20"
+                    class="header-search-icon"
+                  >
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <button type="button" class="button-collapse" id="menuToggle" aria-label="Toggle menu">
+          <img
+            src="{{ 'header-bars.svg' | asset_url }}"
+            width="20"
+            height="20"
+            class="header-search-icon"
+          >
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var menuToggle = document.getElementById('menuToggle');
+    var headerNav = document.getElementById('headerNav');
+    menuToggle.addEventListener('click', function () {
+      headerNav.classList.toggle('active');
+    });
+
+    // Dropdown menu toggle logic
+    document.querySelectorAll('.header-list .dropdown > a').forEach(function (dropdownLink) {
+      dropdownLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Close all dropdown menus first
+        document.querySelectorAll('.header-list .dropdown .dropdown-menu').forEach(function (menu) {
+          menu.classList.remove('active');
+        });
+        var parentLi = dropdownLink.parentElement;
+        var dropdownMenu = parentLi.querySelector('.dropdown-menu');
+        if (dropdownMenu) {
+          dropdownMenu.classList.toggle('active');
+        }
+      });
+    });
+
+    // Hide dropdowns when clicking outside
+    document.addEventListener('click', function (e) {
+      document.querySelectorAll('.header-list .dropdown .dropdown-menu').forEach(function (menu) {
+        if (!menu.contains(e.target) && !menu.parentElement.querySelector('a').contains(e.target)) {
+          menu.classList.remove('active');
+        }
+      });
+    });
+  });
+{% endjavascript %}
+
+{% stylesheet %}
+  .header {
+    background-color: #f8f8f8;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+  }
+
+  .header .logo {
+    max-width: 221px;
+  }
+
+  .header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .header .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .header-nav {
+    margin-left: 30px;
+    margin-right: auto;
+  }
+
+  .header nav .header-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 0;
+  }
+
+  .header nav .header-list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+  .header nav .header-list li a:hover {
+    color: #b74e43;
+  }
+  .header .header-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .header .header-actions ul {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header .header-actions ul li {
+    display: flex;
+    align-items: center;
+  }
+
+  .header .header-actions ul li a {
+    display: flex;
+    align-items: center;
+  }
+
+  .header .button-collapse {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 16px;
+  }
+
+  .header .dropdown .dropdown-menu {
+    opacity: 0;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.5s ease-in-out;
+    width: 100%;
+  }
+
+  .header .dropdown .dropdown-menu ul {
+    margin-right: 60px;
+  }
+
+  .header .dropdown .dropdown-menu ul:last-child {
+    margin-right: 0;
+  }
+  .header .dropdown .dropdown-menu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header .dropdown .dropdown-menu.active {
+    opacity: 1;
+  }
+
+  .header .dropdown a:hover ~ .dropdown-menu {
+    opacity: 1;
+  }
+
+  @media (max-width: 1199px) {
+    .header nav ul {
+      gap: 20px;
+    }
+
+    .header .logo {
+      max-width: 200px;
+    }
+
+    .header .dropdown .dropdown-menu ul {
+      margin-right: 30px;
+    }
+  }
+
+  /* Mobile navigation toggle */
+  @media (max-width: 991px) {
+    .header {
+      height: auto;
+    }
+
+    .header-nav {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      padding: 16px;
+      background-color: #fff;
+      max-height: 0;
+      overflow: auto;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-30px);
+      transition: max-height 0.4s ease, opacity 0.3s, transform 0.4s;
+      margin-left: 0;
+    }
+
+    .header-nav.active {
+      max-height: 700px;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .header nav .header-list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .header .dropdown .dropdown-menu {
+      position: unset;
+      gap: 10px;
+      padding: 0;
+      box-shadow: none;
+      height: 0;
+      display: none;
+    }
+    
+    .header .dropdown .dropdown-menu ul li{
+      line-height: 1;
+    }
+    
+    .header .dropdown .dropdown-menu.active{
+      padding: 16px 0;
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .header .dropdown .dropdown-menu ul {
+      margin-right: 0;
+      margin-bottom: 16px;
+      gap: 10px;
+      width: 30%;
+    }
+
+    .header .button-collapse {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Small devices */
+  @media (max-width: 767px) {
+    .header .logo {
+      max-width: 150px;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+    }
+
+    .header nav .header-list li a {
+      font-size: 14px;
+    }
+
+    .header .dropdown .dropdown-menu ul {
+      font-size: 14px;
+    }
+  }
+
+  /* Extra small devices */
+  @media (max-width: 480px) {
+    .header .dropdown .dropdown-menu {
+      padding: 10px;
+      gap: 16px;
+    }
+
+    .header .dropdown .dropdown-menu ul {
+      margin-bottom: 12px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family",
+      "label": "Font Family",
+      "default": "mono"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "navigation_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "select",
+          "id": "class_name",
+          "label": "CSS Class Name",
+          "options": [
+            {
+              "label": "Dropdown",
+              "value": "dropdown"
+            },
+            {
+              "label": "Nav link",
+              "value": "nav-link"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "link_id",
+          "label": "Unique ID for Dropdown Matching"
+        }
+      ]
+    },
+    {
+      "type": "header_search",
+      "name": "Header Search",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "header_search"
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "name": "Dropdown Group",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "menu_image",
+          "label": "Attach Image"
+        },
+        {
+          "type": "text",
+          "id": "parent_id",
+          "label": "Attach to Link ID"
+        },
+        {
+          "type": "text",
+          "id": "group_title",
+          "label": "Group Title"
+        },
+        {
+          "type": "textarea",
+          "id": "group_items",
+          "label": "Group Items (Comma Separated)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "navigation",
+      "blocks": [
+        { "type": "navigation_link" },
+        { "type": "header_search" },
+        {
+          "type": "dropdown"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+<div class="button-wrapper" style="display: flex; justify-content: {{ section.settings.button_alignment }};">
+  <button
+    class="button"
+    style="font-size: {{ section.settings.button_font_size }}; background-color: {{ section.settings.button_background_color }}; color: {{ section.settings.button_text_color }}; border-radius: {{ section.settings.button_border_radius }}; padding: {{ section.settings.button_padding }};"
+  >
+    {{ section.settings.button_text }}
+  </button>
+</div>
+
+{% schema %}
+{
+  "name": "Common Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "default": "16px"
+    },
+    {
+      "type": "text",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "default": "4px"
+    },
+    {
+      "type": "text",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "default": "10px 20px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Common Button",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

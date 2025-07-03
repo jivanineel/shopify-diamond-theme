@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "name": "Custom Marquee",
+      "type": "horizontal-line-animation",
+      "settings": {}
+    },
+
+    "banner": {
+      "type": "banner",
+      "name": "Banner",
+      "settings": {}
+    }
+  },
+  "order": ["main", "banner"]
+}

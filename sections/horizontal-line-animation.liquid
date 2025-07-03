@@ -1,0 +1,101 @@
+<div class="custom-marquee" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="track">
+    {% for block in section.blocks %}
+      <span class="content">{{ block.settings.text }}</span>
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .custom-marquee {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 10px 0;
+  }
+
+  .custom-marquee .track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: marquee 10s linear infinite;
+  }
+
+  .custom-marquee .content {
+    margin-right: 20px;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Custom Marquee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed (lower = faster)",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Scrolling Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Your scrolling text here."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 1,
+  "presets": [
+    {
+      "name": "Custom Marquee",
+      "blocks": [
+        {
+          "type": "text_block",
+          "settings": {
+            "text": "Your scrolling text here."
+          }
+        },
+        {
+          "type": "text_block",
+          "settings": {
+            "text": "More text to scroll."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
