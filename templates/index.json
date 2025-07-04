@@ -5,12 +5,33 @@
       "type": "horizontal-line-animation",
       "settings": {}
     },
-
     "banner": {
       "type": "banner",
       "name": "Banner",
       "settings": {}
+    },
+    "shoping-jewellery": {
+      "type": "shopping-jewellery",
+      "name": "Shoping-jewellery",
+      "settings": {}
+    },
+    "top-engagement-rings": {
+      "type": "top-engagement-rings",
+      "name": "Top Engagement rings",
+      "settings": {}
+    },
+
+    "in-stock-jewellery": {
+      "type": "in-stock-jewellery",
+      "name": "Stock Jewellery",
+      "settings": {}
     }
   },
-  "order": ["main", "banner"]
+  "order": [
+    "main",
+    "banner",
+    "shoping-jewellery",
+    "top-engagement-rings",
+    "in-stock-jewellery"
+  ]
 }

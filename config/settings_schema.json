@@ -619,5 +619,6 @@
       }
     ]
   },
+
   // ... repeat for all other sections, replacing label values with static text ...
 ]
