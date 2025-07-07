@@ -1,0 +1,128 @@
+<section
+  class="frequently-ask-question"
+  style="padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0; background: {{ section.settings.background-color }}"
+>
+  <div class="main-container">
+    <h2 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
+      {{ section.settings.section_title }}
+    </h2>
+    <div class="frequently-ask">
+      {% for block in section.blocks %}
+        <div class="frequently-item">
+          {% if block.settings.question != blank %}
+            <div class="frequently-question">
+              <div style="display: flex; align-items: center; justify-content: space-between; width: 100%">
+                <span>
+                  {{ block.settings.question }}
+                </span>
+
+                <img
+                  src="{{ 'faq-image.png' | asset_url }}"
+                  alt="faq-icon"
+                  width="30"
+                  height="30"
+                >
+              </div>
+            </div>
+          {% endif %}
+          {% if block.settings.answer != blank %}
+            <div class="frequently-answer">
+              {{ block.settings.answer }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Frequently Ask Questiion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title"
+    },
+    {
+      "type": "range",
+      "id": "title-margin-bottom",
+      "label": "Title margin bottom",
+      "max": 100,
+      "min": 0,
+      "default": 0
+    },
+    {
+      "type": "number",
+      "label": "padding-top",
+      "id": "padding-top",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "label": "padding-bottom",
+      "id": "padding-bottom",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background-color",
+      "label": "Background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Faq",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frequently Ask Questiion",
+      "blocks": [
+        {
+          "type": "faq"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .frequently-ask-question .main-container {
+    max-width: 882px;
+  }
+
+  .frequently-question {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 16px 15px 0 #a1a1a10a;
+    padding: 25px 30px;
+    font-size: 20px;
+    line-height: 150%;
+    color: #1A0902;
+    border-radius: 8px;
+  }
+
+  .frequently-answer{
+    padding: 24px 30px;
+    font-size: 16px;
+    line-height: 150%;
+    color: #1A0902;
+    display: none;
+  }
+{% endstylesheet %}

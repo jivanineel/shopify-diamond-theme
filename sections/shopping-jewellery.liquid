@@ -3,9 +3,19 @@
   style="padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0; background: {{ section.settings.background-color }}"
 >
   <div class="main-container">
+    {% if section.settings.section_title != blank %}
+      <div class="heading">
+        <h2 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
+          {{ section.settings.section_title }}
+        </h2>
+        <p class="section-sub-title" style="margin-bottom: {{ section.settings.sub-margin-bottom }}px">
+          {{ section.settings.section_sub_title }}
+        </p>
+      </div>
+    {% endif %}
     <div class="jewellery-diamond">
       {% for block in section.blocks %}
-        <div class="shopping-card">
+        <div class="shopping-card {{ section.settings.gift-class }}">
           {% if block.settings['background-image'] %}
             <img
               src="{{ block.settings.background-image | image_url: width: 1000 }}"
@@ -17,7 +27,9 @@
           {% endif %}
           <div class="card-content">
             <h5>{{ block.settings['content-text'] }}</h5>
-            <button>Shop</button>
+            {% if block.settings['shopping-button'] != blank %}
+              <button>Shop</button>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
@@ -51,6 +63,47 @@
       "type": "color",
       "id": "background-color",
       "label": "Background color"
+    },
+    {
+      "type": "select",
+      "id": "gift-class",
+      "label": "gift class",
+      "options": [
+        {
+          "value": "gift-card",
+          "label": "gift-card"
+        },
+        {
+          "value": "gift-card-remove",
+          "label": "gift-none"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title"
+    },
+    {
+      "type": "range",
+      "id": "title-margin-bottom",
+      "label": "Title margin bottom",
+      "max": 100,
+      "min": 0,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "section_sub_title",
+      "label": "Section Sub Title"
+    },
+    {
+      "type": "range",
+      "id": "sub-margin-bottom",
+      "label": "Title margin bottom",
+      "max": 100,
+      "min": 0,
+      "default": 0
     }
   ],
   "blocks": [
@@ -67,6 +120,11 @@
           "type": "text",
           "label": "Shoping Content Text",
           "id": "content-text"
+        },
+        {
+          "type": "text",
+          "label": "Shoping Button Label",
+          "id": "shopping-button"
         }
       ]
     }
@@ -91,6 +149,10 @@
     transition: all 0.5s ease-in-out;
     overflow: hidden;
     border-radius: 10px;
+  }
+
+  .shopping-card.gift-card {
+    height: auto;
   }
 
   .jewellery-diamond {

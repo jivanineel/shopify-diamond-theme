@@ -4,7 +4,7 @@
 >
   <div class="main-container">
     {% if section.settings.instock_title != blank %}
-      <div class="content-container">
+      <div class="content-container" style="display: flex; flex-direction: column; justify-content: {{ section.settings.align-top-bottom }}; align-items: {{ section.settings.align-left-right }};">
         <h2>{{ section.settings.instock_title }}</h2>
         <p>{{ section.settings.instock_sub_title }}</p>
         {% for block in section.blocks %}
@@ -47,6 +47,44 @@
       "type": "text",
       "id": "instock_sub_title",
       "label": "Section Sub Title"
+    },
+    {
+      "type": "select",
+      "id": "align-top-bottom",
+      "label": "ALignment Top-Bottom",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "top",
+        },
+        {
+          "value": "center",
+          "label": "Center",
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom",
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "align-left-right",
+      "label": "ALignment Left-Right",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left",
+        },
+        {
+          "value": "center",
+          "label": "Center",
+        },
+        {
+          "value": "flex-end",
+          "label": "Right",
+        }
+      ]
     }
   ],
   "blocks": [

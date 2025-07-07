@@ -25,6 +25,17 @@
       "type": "in-stock-jewellery",
       "name": "Stock Jewellery",
       "settings": {}
+    },
+
+    "customer-review": {
+      "type": "customer-review",
+      "name": "Customer Review",
+      "settings": {}
+    },
+    "faq-section":{
+      "type": "frequently-question",
+      "name": "Frequently Ask Question",
+      "settings": {}
     }
   },
   "order": [
@@ -32,6 +43,8 @@
     "banner",
     "shoping-jewellery",
     "top-engagement-rings",
-    "in-stock-jewellery"
+    "in-stock-jewellery",
+    "customer-review",
+    "faq-section"
   ]
 }
