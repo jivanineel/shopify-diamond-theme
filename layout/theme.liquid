@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8">
     <title>{{ page_title }}</title>
-    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-    {%- endunless -%}
 
     {{ content_for_header }}
     <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
@@ -16,6 +17,10 @@
     %}
 
     {% style %}
+      body{
+        font-family: var(--font-body-family);
+      }
+
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}
@@ -192,14 +197,8 @@
 
       *,
       *::before,
-      *::after {
+      *::after {s
         box-sizing: inherit;
-      }
-
-      html {
-        box-sizing: border-box;
-        font-size: calc(var(--font-body-scale) * 62.5%);
-        height: 100%;
       }
 
       @media screen and (min-width: 750px) {

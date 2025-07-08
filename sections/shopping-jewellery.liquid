@@ -1,6 +1,6 @@
 <section
   class="shopping-jewellery"
-  style="padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0; background: {{ section.settings.background-color }}"
+  style=""
 >
   <div class="main-container">
     {% if section.settings.section_title != blank %}
@@ -142,6 +142,20 @@
 }
 {% endschema %}
 
+<style>
+  .shopping-jewellery{
+    padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0;
+    background: {{ section.settings.background-color }}
+  }
+
+  .section_title{
+    margin-bottom: {{ section.settings.title-margin-bottom }}px
+  }
+  .section_sub_title{
+    margin-bottom: {{ section.settings.sub-margin-bottom }}px
+  }
+</style>
+
 {% stylesheet %}
   .shopping-card {
     position: relative;
@@ -175,8 +189,8 @@
 
   .card-content {
     position: absolute;
-    top: 0;
     left: 0;
+    bottom: 40px;
     height: 100%;
     width: 100%;
     display: flex;
@@ -184,7 +198,6 @@
     align-items: center;
     justify-content: flex-end;
     gap: 30px;
-    padding-bottom: 40px;
   }
 
   .card-content h5 {
@@ -207,7 +220,7 @@
   @media (max-width: 991px) {
     .shopping-card {
       width: 48%;
-      height: 450px;
+      height: 400px;
     }
   }
 

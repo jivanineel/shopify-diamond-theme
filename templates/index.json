@@ -32,9 +32,14 @@
       "name": "Customer Review",
       "settings": {}
     },
-    "faq-section":{
+    "faq-section": {
       "type": "frequently-question",
       "name": "Frequently Ask Question",
+      "settings": {}
+    },
+    "follow-as-instagram": {
+      "type": "follow-as-instagram",
+      "name": "instagram-image",
       "settings": {}
     }
   },
@@ -45,6 +50,7 @@
     "top-engagement-rings",
     "in-stock-jewellery",
     "customer-review",
-    "faq-section"
+    "faq-section",
+    "follow-as-instagram"
   ]
 }

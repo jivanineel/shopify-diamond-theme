@@ -1,6 +1,6 @@
 <section
   class="frequently-ask-question"
-  style="padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0; background: {{ section.settings.background-color }}"
+  style=""
 >
   <div class="main-container">
     <h2 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
@@ -102,6 +102,76 @@
 }
 {% endschema %}
 
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.frequently-question').forEach(function (question) {
+      question.addEventListener('click', function () {
+        var currentItem = this.closest('.frequently-item');
+        var currentAnswer = currentItem.querySelector('.frequently-answer');
+        if (!currentAnswer) return;
+
+        // Close all other answers with animation
+        document.querySelectorAll('.frequently-answer').forEach(function (answer) {
+          if (answer !== currentAnswer) {
+            answer.style.overflow = 'hidden';
+            answer.style.transition = 'height 0.3s linear';
+            answer.style.height = answer.scrollHeight + 'px';
+            setTimeout(function () {
+              answer.style.height = '0px';
+            }, 10);
+            setTimeout(function () {
+              answer.style.display = 'none';
+              answer.style.height = '';
+              answer.style.transition = '';
+              answer.style.overflow = '';
+            }, 310);
+          }
+        });
+
+        // Toggle current answer with animation
+        if (currentAnswer.style.display === 'block') {
+          currentAnswer.style.overflow = 'hidden';
+          currentAnswer.style.transition = 'height 0.3s linear';
+          currentAnswer.style.height = currentAnswer.scrollHeight + 'px';
+          setTimeout(function () {
+            currentAnswer.style.height = '0px';
+          }, 10);
+          setTimeout(function () {
+            currentAnswer.style.display = 'none';
+            currentAnswer.style.height = '';
+            currentAnswer.style.transition = '';
+            currentAnswer.style.overflow = '';
+          }, 310);
+        } else {
+          currentAnswer.style.display = 'block';
+          currentAnswer.style.overflow = 'hidden';
+          currentAnswer.style.height = '0px';
+          currentAnswer.style.transition = 'height 0.3s linear';
+          setTimeout(function () {
+            currentAnswer.style.height = currentAnswer.scrollHeight + 'px';
+          }, 10);
+          setTimeout(function () {
+            currentAnswer.style.height = '';
+            currentAnswer.style.transition = '';
+            currentAnswer.style.overflow = '';
+          }, 310);
+        }
+      });
+    });
+  });
+{% endjavascript %}
+
+<style>
+  .frequently-ask-question{
+    padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px 0;
+    background: {{ section.settings.background-color }}
+  }
+
+  .section_title {
+    margin-bottom: {{ section.settings.title-margin-bottom }}px
+  }
+</style>
+
 {% stylesheet %}
   .frequently-ask-question .main-container {
     max-width: 882px;
@@ -114,15 +184,40 @@
     padding: 25px 30px;
     font-size: 20px;
     line-height: 150%;
-    color: #1A0902;
+    color: #1a0902;
+    cursor: pointer;
     border-radius: 8px;
   }
 
-  .frequently-answer{
+  .frequently-question img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .frequently-answer {
     padding: 24px 30px;
     font-size: 16px;
     line-height: 150%;
-    color: #1A0902;
+    color: #1a0902;
     display: none;
+  }
+
+  @media (max-width: 767px) {
+    .frequently-question {
+      padding: 20px 25px;
+    }
+
+    .frequently-answer {
+      padding: 20px 25px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .frequently-question {
+      padding: 16px;
+    }
+    .frequently-answer {
+      padding: 16px;
+    }
   }
 {% endstylesheet %}

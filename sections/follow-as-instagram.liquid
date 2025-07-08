@@ -1,0 +1,154 @@
+<section class="instagram-image">
+  <div class="instagram-mark">
+    <div class="image_grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'instagram-image' and block.settings['instagram-image'] != blank %}
+          <img
+            src="{{ block.settings['instagram-image'] | image_url: width: 260 }}"
+            alt="{{ block.settings['instagram-image'] }}"
+            class="instagram"
+            width="100%"
+            height="100%"
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% for block in section.blocks %}
+      {% if block.type == 'instagram-content' and block.settings.web_name != blank %}
+        <div class="instagram-card">
+          <p class="united-moisnate">{{ block.settings.web_name }}</p>
+          <p class="sharing-text">{{ block.settings.want_text }}</p>
+          {% if block.settings['button-label'] != blank %}
+            <button class="btn-dark" style="font-size: 14px">{{ block.settings['button-label'] }}</button>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    <div class="image_grid1">
+      {% for block in section.blocks %}
+        {% if block.type == 'instagram-image1' and block.settings['instagram-image'] != blank %}
+          <img
+            src="{{ block.settings['instagram-image'] | image_url: width: 260 }}"
+            alt="{{ block.settings['instagram-image'] }}"
+            class="instagram"
+            width="100%"
+            height="100%"
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "instagram-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "instagram-image",
+      "name": "image-part",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "instagram-image",
+          "id": "instagram-image"
+        }
+      ]
+    },
+    {
+      "type": "instagram-image1",
+      "name": "image-part1",    
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "instagram-image",
+          "id": "instagram-image"
+        }
+      ]
+    },
+    {
+      "type": "instagram-content",
+      "name": "instagram-info",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "instagram-id",
+          "id": "web_name"
+        },
+        {
+          "type": "text",
+          "label": "Your Text",
+          "id": "want_text"
+        },
+        {
+          "type": "text",
+          "label": "Button-label",
+          "id": "button-label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .instagram-image{
+      background: {{ section.settings.background }}
+  }
+</style>
+
+{% stylesheet %}
+  .instagram-mark { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image_grid,
+  .image_grid1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .instagram-card {
+    max-width: 500px;
+    width: 100%;
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  .instagram-card .united-moisnate {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 3%;
+    color: #aa4239;
+    margin-bottom: 10px;
+  }
+
+  .instagram-card .sharing-text {
+    font-weight: Bold;
+    font-size: 28px;
+    color: #1a0902;
+  }
+
+  @media (max-width: 767px) {
+    .instagram-mark {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}

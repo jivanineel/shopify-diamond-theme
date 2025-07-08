@@ -3,7 +3,7 @@
     <div class="banner-mark">
       {% for block in section.blocks %}
         {% if block.settings.banner_title %}
-          <h1 class="banner-title" style="font-family: {{ block.settings.banner_title_font_family }};">
+          <h1 class="banner-title" style="font-family: {{ block.settings.banner_title_font_family.family }};">
             {{ block.settings.banner_title }}
           </h1>
           <p class="banner-description">{{ block.settings.banner_description }}</p>
@@ -164,6 +164,7 @@
     font-size: 48px;
     line-height: 100%;
     font-weight: 400;
+    color: #1A0902;
   }
 
   .banner-mark p {

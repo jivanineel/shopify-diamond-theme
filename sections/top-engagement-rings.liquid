@@ -3,10 +3,16 @@
   style="padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px; background: {{ section.settings.background-color }}"
 >
   <div class="main-container">
-    <h2 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
+    <h2
+      class="section-title"
+      style="margin-bottom: {{ section.settings.title-margin-bottom }}px; font-family: 'Satoshi', sans-serif;"
+    >
       {{ section.settings.section_title }}
     </h2>
-    <p class="section-sub-title" style="margin-bottom: {{ section.settings.sub-margin-bottom }}px">
+    <p
+      class="section-sub-title"
+      style="margin-bottom: {{ section.settings.sub-margin-bottom }}px; font-family: 'Satoshi', sans-serif;"
+    >
       {{ section.settings.section_sub_title }}
     </p>
     <div class="top-rings-image">
@@ -17,14 +23,15 @@
               src="{{ block.settings.engagement_ring_image | image_url: width: 1000 }}"
               alt="{{ block.settings.engagement_ring_image }}"
               width=""
-              height=""
+              height="626"
               class="card-background"
             >
           {% endif %}
-          {% comment %} {% if block.settings.video_play %}
+          {% comment %} 
+           {% if block.settings.video_play %}
             <video
               playsinline="playsinline"
-              autoplay="autoplay"
+              autoplay
               muted="muted"
               loop="loop"
               class="custom-video-class"
@@ -32,13 +39,14 @@
               poster="{{ block.settings.thumbnail_image }}"
             >
               <source
-                src="{{ block.settings.video_play }}"
+                src="{{ block.settings.video_play | file_url }}"
                 type="video/mp4"
               >
-              <img src="{{ block.settings.thumbnail_image }}" width="" height="" alt="block.settings.thumbnail_image">
+              <img src="{{ block.settings.thumbnail_image | image_url: width: 500 }}" width="" height="" alt="{{ block.settings.thumbnail_image }}">
             </video>
-          {% endif %} {% endcomment %}
-          <div class="enagement-card-content">
+            {% endif %} 
+          {% endcomment %}
+            <div class="enagement-card-content">
             <h6 class="engagement-ring-name">{{ block.settings['rings-text'] }}</h6>
             <p class="engagement-ring-price">{{ block.settings['rings-price'] }}</p>
           </div>
@@ -47,18 +55,22 @@
     </div>
   </div>
 </section>
-{% comment %} {
-          "type": "video",
-          "label": "Engagement video",
-          "id": "video_play",
-        },
-        { 
-          "type": "image_picker",
-          "label": "Engagement Thumbnail Image",
-          "id": "thumbnail_image",
-        }, {% endcomment %}
+{% comment %}
+{% endcomment %}
+{% comment %}
+{
+  "type": "video",
+  "label": "Engagement video",
+  "id": "video_play"
+},
+{
+  "type": "image_picker",
+  "label": "Engagement Thumbnail Image",
+  "id": "thumbnail_image"
+} 
+{% endcomment %}
 
-{% schema %}  
+{% schema %}
 {
   "name": "top-engagement-rings",
   "settings": [
@@ -122,7 +134,7 @@
           "label": "Engagement Card Image",
           "id": "engagement_ring_image"
         },
-        
+
         {
           "type": "text",
           "label": "Rings Name Text",
@@ -132,7 +144,7 @@
           "type": "text",
           "label": "Rings price Text",
           "id": "rings-price"
-        }
+        },
       ]
     }
   ],
@@ -154,6 +166,7 @@
   .section-title {
     font-size: 34px;
     line-height: 100%;
+    font-weight: 400;
     color: #1a0902;
     text-align: center;
   }
@@ -170,7 +183,7 @@
     gap: 30px;
   }
 
-  .top-rings-image .top-enagagement-work{
+  .top-rings-image .top-enagagement-work {
     border-radius: 10px;
     overflow: hidden;
   }
@@ -214,21 +227,21 @@
     color: #1a0902;
   }
 
-    /* @media (max-width: 991px) {
-      .top-rings-image {
-      grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 991px) {
+    .section-title {
+      font-size: 30px;
     }
-
-    .top-rings-image .top-enagagement-work:nth-child(3) {
-      grid-row-start: 1;
-      grid-row-end: 3;
-      grid-column-start: 3;
+  }
+  @media (max-width: 767px) {
+    .section-title {
+      font-size: 26px;
+      margin-bottom: 30px !important;
     }
-
-    .top-rings-image .top-enagagement-work:nth-child(4) {
-      grid-row-start: 1;
-      grid-row-end: 3;
-      grid-column-start: 4;
+  }
+  @media (max-width: 575px) {
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px !important;
     }
-    } */
+  }
 {% endstylesheet %}

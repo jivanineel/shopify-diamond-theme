@@ -1,38 +1,495 @@
-<section class="footer">
-  <div class="container">
-    <footer>
-        <p> All rights reserved.</p>
-        <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-        </ul>
-    </footer>
+<div class="footer">
+  <div class="main-container">
+    <div class="footer-link-groups">
+      {% for block in section.blocks %}
+        {% if block.type == 'footer_links' %}
+          <div class="footer-links-group">
+            <p class="footer-div-head">{{ block.settings.heading }}</p>
+            <ul class="footer-links">
+              {% assign current_group = block.settings.group_id %}
+              {% for link_block in section.blocks %}
+                {% if link_block.type == 'link'
+                  and link_block.settings.group_id == current_group
+                  and link_block.settings.label != blank
+                %}
+                  <li>
+                    <a href="{{ link_block.settings.url }}" target="_blank">
+                      {{ link_block.settings.label }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            {% if block.settings.footer_text != blank %}
+              <div class="footer-signup">
+                <p class="footer-text">
+                  {{ block.settings.footer_text }}
+                </p>
+                <div class="signup-data" style="display: flex; ">
+                  <input placeholder="Enter your Email" class="email-field">
+                  <button class="btn-dark">SIGN UP</button>
+                </div>
+                <ul class="social-media">
+                  <li>
+                    <a>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"/>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                      </svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                        <path d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3 .8-3.4 5-20.3 6.9-28.1 .6-2.5 .3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"/>
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% for logo in section.blocks %}
+      {% if logo.settings['footer-logo'] %}
+        <div
+          class="footer-logo"
+          style="justify-content: {{ logo.settings.left-right-align }}; align-items: {{ logo.settings.top-bottom-align }}; margin: {{ logo.settings.margin-top }}px 0 {{ logo.settings.margin-bottom }}px "
+        >
+          <img
+            src="{{ logo.settings['footer-logo'] | image_url: width: 69 }}"
+            alt="{{ logo.settings['footer-logo'] }}"
+            class="image"
+            width=""
+            height=""
+          >
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="website-policy">
+      <div class="all-reserved">
+        {% for policy in section.blocks %}
+          {% if policy.settings.policy_text %}
+            <p class="policy-text">{{ policy.settings.policy_text }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="all-reserved">
+        {% for policy_links in section.blocks %}
+          {% if policy_links.settings.policy_link %}
+            <a class="policy-links">{{ policy_links.settings.policy_link }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="payments-app">
+        {% for payments in section.blocks %}
+          {% if payments.settings['payments-app'] %}
+            <a class="payments">
+              <img
+                src="{{ payments.settings['payments-app'] | image_url: width: 69 }}"
+                alt="{{ payments.settings['payments-app'] }}"
+                class="payment-app"
+                width=""
+                height=""
+              >
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
-</section>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [
+    {
+      "type": "range",
+      "label": "padding-top",
+      "id": "padding-top",
+      "max": 100,
+      "min": 0,
+      "default": 0,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "label": "padding-bottom",
+      "id": "padding-bottom",
+      "max": 100,
+      "min": 0,
+      "default": 0,
+      "step": 1
+    },
+    {
+      "type": "color",
+      "id": "background-color",
+      "label": "Background color"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family",
+      "label": "Font Family",
+      "default": "sans-serif"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "footer_links",
+      "name": "Footer Links Group",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "group_id",
+          "label": "Group ID (e.g., group1)",
+          "info": "Use the same ID in link blocks to associate them with this group."
+        },
+        {
+          "type": "text",
+          "id": "footer_text",
+          "label": "footer-text"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Footer Link",
+      "limit": 50,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Link Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "group_id",
+          "label": "Parent Group ID",
+          "info": "Must match the group ID of a footer_links block."
+        }
+      ]
+    },
+    {
+      "type": "logo",
+      "name": "Footer logo",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Footer Logo",
+          "id": "footer-logo"
+        },
+        {
+          "type": "number",
+          "label": "Margin Top",
+          "id": "margin-top"
+        },
+        {
+          "type": "number",
+          "label": "Margin Bottom",
+          "id": "margin-bottom"
+        },
+        {
+          "type": "select",
+          "label": "Logo Align",
+          "id": "left-right-align",
+          "options": [
+            {
+              "value": "flex-start",
+              "label": "left"
+            },
+            {
+              "value": "center",
+              "label": "center"
+            },
+            {
+              "value": "flex-end",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "label": "Logo Align",
+          "id": "top-bottom-align",
+          "options": [
+            {
+              "value": "flex-start",
+              "label": "top"
+            },
+            {
+              "value": "center",
+              "label": "center"
+            },
+            {
+              "value": "flex-end",
+              "label": "bottom"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "policy",
+      "name": "Policy Text",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Policy Text",
+          "id": "policy_text"
+        }
+      ]
+    },
+    {
+      "type": "policy_links",
+      "name": "Policy Link",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Policy Link",
+          "id": "policy_link"
+        }
+      ]
+    },
+    {
+      "type": "payments",
+      "name": "payments App",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Payments App",
+          "id": "payments-app"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "category": "Footer",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .footer{
+    padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px;
+    background: {{ section.settings.background-color }};
+    color: {{ section.settings.font_color }};
+    font-family: {{ section.settings.font_family.family  }};
+  }
+  .footer-links a{
+    color: {{ section.settings.font_color }};
+    font-family: 'Satoshi', sans-serif;
+    font-size: 14px;
+  }
+
+  .footer-logo {
+    display: flex;
+  }
+</style>
+
 {% stylesheet %}
-  .footer {
-    padding: 2rem 0;
-    background-color: #f8f8f8;
+  .footer .main-container {
+    width: auto;
   }
 
   .footer-links {
     list-style: none;
     padding: 0;
-  }
-
-  .footer-links li {
-    display: inline;
-    margin-right: 1rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .footer-links a {
     text-decoration: none;
-    color: #333;
+  }
+
+  .footer-link-groups {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 80px;
+  }
+
+  .footer-links-group{
+    max-width: 140px;
+    width: 100%;
+  }
+
+  .footer-links-group:last-child{
+    max-width: 407px;
+    width: 100%;
+  }
+
+  .footer-links-group .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-div-head {
+    font-size: 18px;
+    margin-bottom: 26px;
   }
 
   .footer-links a:hover {
     text-decoration: underline;
+  }
+
+  .footer-signup {
+    max-width: 407px;
+    width: 100%;
+  }
+
+  .signup-data {
+    margin: 26px 0 37px;
+  }
+
+  .footer-signup .btn-dark {
+    background: #aa4239;
+    border: 1px solid #aa4239;
+    border-radius: 0 55px 55px 0;
+    font-size: 14px;
+    padding: 15px 24px;
+    white-space: nowrap;
+  }
+  .email-field {
+    max-width: 287px;
+    width: 100%;
+    font-size: 14px;
+    color: #1a0902;
+    border-radius: 55px 0 0 55px;
+    outline: none;
+    border: none;
+    padding: 15px 24px;
+  }
+
+  .social-media {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-logo {
+    width: 100%;
+  }
+
+  .social-media svg {
+    width: 24px;
+  }
+  .social-media svg path {
+    fill: #ffeee7;
+  }
+
+  .website-policy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1219px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .policy-text {
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  .payments-app {
+    display: flex;
+    gap: 10px;
+  }
+
+  .policy-links{
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  .footer-text{
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+
+  }
+
+  @media (max-width: 991px){
+    .website-policy {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .footer-link-groups {
+      gap: 40px;
+    }
+
+    .footer-logo {
+      margin: 20px 0 !important;
+    }
+
+    .footer-logo img{
+      max-width: 50px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .footer-link-groups {
+      gap: 20px;
+    }
+
+    .footer-link-group:last-child{
+      width: 100%;
+    }
+
+    .signup-data{
+      margin: 16px 0 20px !important;
+    }
   }
 {% endstylesheet %}

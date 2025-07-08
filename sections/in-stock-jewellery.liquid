@@ -2,13 +2,18 @@
   class="instock-jewellery"
   style="background: url({{ section.settings.background-image | img_url: 'master' }}); background-size: cover; padding: {{ section.settings.padding-top }}px 0 {{ section.settings.padding-bottom }}px;"
 >
-  <div class="main-container">
+  <div
+    class="main-container"
+    style="display: flex; flex-direction: column; justify-content: {{ section.settings.align-top-bottom }}; align-items: {{ section.settings.align-left-right }};"
+  >
     {% if section.settings.instock_title != blank %}
-      <div class="content-container" style="display: flex; flex-direction: column; justify-content: {{ section.settings.align-top-bottom }}; align-items: {{ section.settings.align-left-right }};">
-        <h2>{{ section.settings.instock_title }}</h2>
-        <p>{{ section.settings.instock_sub_title }}</p>
+      <div class="content-container">
+        <h2 style="font-size: {{ section.settings.font_size }}px; color: {{ section.settings.font_color }}">
+          {{ section.settings.instock_title }}
+        </h2>
+        <p style="color: {{ section.settings.font_color }}">{{ section.settings.instock_sub_title }}</p>
         {% for block in section.blocks %}
-          {% if block.settings['button-label'] %}
+          {% if block.settings['button-label'] != blank %}
             <button class="btn-dark">{{ block.settings['button-label'] }}</button>
           {% endif %}
         {% endfor %}
@@ -45,6 +50,16 @@
     },
     {
       "type": "text",
+      "id": "font_size",
+      "label": "Title Font Size"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Title Font Color"
+    },
+    {
+      "type": "text",
       "id": "instock_sub_title",
       "label": "Section Sub Title"
     },
@@ -55,15 +70,15 @@
       "options": [
         {
           "value": "flex-start",
-          "label": "top",
+          "label": "top"
         },
         {
           "value": "center",
-          "label": "Center",
+          "label": "Center"
         },
         {
           "value": "flex-end",
-          "label": "Bottom",
+          "label": "Bottom"
         }
       ]
     },
@@ -74,15 +89,15 @@
       "options": [
         {
           "value": "flex-start",
-          "label": "Left",
+          "label": "Left"
         },
         {
           "value": "center",
-          "label": "Center",
+          "label": "Center"
         },
         {
           "value": "flex-end",
-          "label": "Right",
+          "label": "Right"
         }
       ]
     }
@@ -121,16 +136,13 @@
   }
 
   .instock-jewellery .content-container h2 {
-    font-size: 48px;
     font-weight: 400;
-    color: #1a0902;
   }
 
   .instock-jewellery .content-container p {
-    margin: 40px 0;
+    margin: 20px 0 40px;
     font-size: 16px;
     font-weight: 400;
-    color: #1a0902;
   }
 
   .instock-jewellery .content-container button {
@@ -146,31 +158,43 @@
   }
 
   @media (max-width: 991px) {
-    .instock-jewellery{
-        padding: 90px 0 !important;
+    .instock-jewellery {
+      padding: 90px 0 !important;
     }
 
     .instock-jewellery .content-container {
       margin-left: 100px !important;
     }
+
+    .instock-jewellery .content-container h2{
+      font-size: 38px !important;
+    }
   }
-   @media (max-width: 767px) {
-    .instock-jewellery{
-        padding: 50px 0 !important;
+  @media (max-width: 767px) {
+    .instock-jewellery {
+      padding: 50px 0 !important;
     }
 
     .instock-jewellery .content-container {
       margin-left: 60px !important;
     }
+
+    .instock-jewellery .content-container h2{
+      font-size: 32px !important;
+    }
   }
 
   @media (max-width: 575px) {
-    .instock-jewellery{
-        padding: 30px 0 !important;
+    .instock-jewellery {
+      padding: 30px 0 !important;
     }
 
     .instock-jewellery .content-container {
       margin-left: 0 !important;
+    }
+
+    .instock-jewellery .content-container h2{
+      font-size: 28px !important;
     }
   }
 {% endstylesheet %}
