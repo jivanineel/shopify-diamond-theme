@@ -1,10 +1,14 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": {
-      "name": "Custom Marquee",
-      "type": "horizontal-line-animation",
-      "settings": {}
-    },
     "banner": {
       "type": "banner",
       "name": "Banner",
@@ -13,38 +17,75 @@
     "shoping-jewellery": {
       "type": "shopping-jewellery",
       "name": "Shoping-jewellery",
-      "settings": {}
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "background-color": "",
+        "gift-class": "gift-card",
+        "section_title": "",
+        "title-margin-bottom": 0,
+        "section_sub_title": "",
+        "sub-margin-bottom": 0
+      }
     },
     "top-engagement-rings": {
       "type": "top-engagement-rings",
       "name": "Top Engagement rings",
-      "settings": {}
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "background-color": "",
+        "section_title": "",
+        "title-margin-bottom": 0,
+        "section_sub_title": "",
+        "sub-margin-bottom": 0
+      }
     },
-
     "in-stock-jewellery": {
       "type": "in-stock-jewellery",
       "name": "Stock Jewellery",
-      "settings": {}
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "instock_title": "",
+        "instock_sub_title": "",
+        "align-top-bottom": "flex-start",
+        "align-left-right": "flex-start"
+      }
     },
-
     "customer-review": {
       "type": "customer-review",
       "name": "Customer Review",
-      "settings": {}
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "background-color": "",
+        "section_title": "",
+        "title-margin-bottom": 0
+      }
     },
     "faq-section": {
       "type": "frequently-question",
       "name": "Frequently Ask Question",
+<<<<<<< HEAD
       "settings": {}
     },
     "follow-as-instagram": {
       "type": "follow-as-instagram",
       "name": "instagram-image",
       "settings": {}
+=======
+      "settings": {
+        "section_title": "",
+        "title-margin-bottom": 0,
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "background-color": ""
+      }
+>>>>>>> 5c860c31a29a815f3220f3288e255138ef6fb71a
     }
   },
   "order": [
-    "main",
     "banner",
     "shoping-jewellery",
     "top-engagement-rings",
