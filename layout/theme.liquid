@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -6,10 +6,18 @@
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
     {{ content_for_header }}
     <link rel="stylesheet" href="{{ 'style.css' | asset_url }}">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer="defer"></script>
+
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
@@ -220,7 +228,7 @@
     {%- endunless -%}
   </head>
   <body>
-    {% section 'header' %}
+    {% section 'custom-header' %}
     {{ content_for_layout }}
     {% comment %} {% section 'footer' %} {% endcomment %}
   </body>

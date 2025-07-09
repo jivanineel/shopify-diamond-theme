@@ -27,47 +27,71 @@
               class="card-background"
             >
           {% endif %}
-          {% comment %} 
-           {% if block.settings.video_play %}
-            <video
-              playsinline="playsinline"
-              autoplay
-              muted="muted"
-              loop="loop"
-              class="custom-video-class"
-              preload="metadata"
-              poster="{{ block.settings.thumbnail_image }}"
-            >
-              <source
-                src="{{ block.settings.video_play | file_url }}"
-                type="video/mp4"
-              >
-              <img src="{{ block.settings.thumbnail_image | image_url: width: 500 }}" width="" height="" alt="{{ block.settings.thumbnail_image }}">
-            </video>
-            {% endif %} 
+          {% comment %}
+            {% if block.settings.video_play %}
+             <video
+               playsinline="playsinline"
+               autoplay
+               muted="muted"
+               loop="loop"
+               class="custom-video-class"
+               preload="metadata"
+               poster="{{ block.settings.thumbnail_image }}"
+             >
+               <source
+                 src="{{ block.settings.video_play | file_url }}"
+                 type="video/mp4"
+               >
+               <img src="{{ block.settings.thumbnail_image | image_url: width: 500 }}" width="" height="" alt="{{ block.settings.thumbnail_image }}">
+             </video>
+             {% endif %}
           {% endcomment %}
-            <div class="enagement-card-content">
+          <div class="enagement-card-content">
             <h6 class="engagement-ring-name">{{ block.settings['rings-text'] }}</h6>
             <p class="engagement-ring-price">{{ block.settings['rings-price'] }}</p>
           </div>
         </div>
       {% endfor %}
     </div>
+
+    <div class="top-rings-slider">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="top-enagagement-work swiper-slide">
+              {% if block.settings.engagement_ring_image %}
+                <img
+                  src="{{ block.settings.engagement_ring_image | image_url: width: 1000 }}"
+                  alt="{{ block.settings.engagement_ring_image }}"
+                  width=""
+                  height="626"
+                  class="card-background"
+                >
+              {% endif %}
+              <div class="enagement-card-content">
+                <h6 class="engagement-ring-name">{{ block.settings['rings-text'] }}</h6>
+                <p class="engagement-ring-price">{{ block.settings['rings-price'] }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
   </div>
 </section>
+
 {% comment %}
-{% endcomment %}
-{% comment %}
-{
-  "type": "video",
-  "label": "Engagement video",
-  "id": "video_play"
-},
-{
-  "type": "image_picker",
-  "label": "Engagement Thumbnail Image",
-  "id": "thumbnail_image"
-} 
+  {
+    "type": "video",
+    "label": "Engagement video",
+    "id": "video_play"
+  },
+  {
+    "type": "image_picker",
+    "label": "Engagement Thumbnail Image",
+    "id": "thumbnail_image"
+  }
 {% endcomment %}
 
 {% schema %}
@@ -144,7 +168,7 @@
           "type": "text",
           "label": "Rings price Text",
           "id": "rings-price"
-        },
+        }
       ]
     }
   ],
@@ -218,6 +242,10 @@
     padding-bottom: 20px;
   }
 
+  .top-rings-slider {
+    display: none;
+  }
+
   .enagement-card-content .engagement-ring-name {
     font-size: 14px;
     color: #1a0902;
@@ -231,17 +259,67 @@
     .section-title {
       font-size: 30px;
     }
+
+    .top-rings-image {
+      display: none;
+    }
+    .top-rings-slider {
+      display: block;
+    }
+
+    .top-rings-slider .swiper{
+      padding-bottom: 60px;
+    }
+    
+    .top-rings-slider .swiper .swiper-slide{
+      border-radius: 10px;
+      object-fit: cover;
+      object-position: center;
+      background-position: center;
+      max-height: 400px;
+      height: 100%;
+      overflow: hidden;
+    }
   }
   @media (max-width: 767px) {
     .section-title {
       font-size: 26px;
       margin-bottom: 30px !important;
     }
+
   }
   @media (max-width: 575px) {
+      .top-rings-slider .swiper .swiper-slide{
+        max-height: 300px;
+      }
     .section-title {
       font-size: 24px;
       margin-bottom: 20px !important;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var swiper = new Swiper('.mySwiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        },
+        576: {
+          slidesPerView: 1.5,
+        },
+      },
+    });
+  });
+{% endjavascript %}

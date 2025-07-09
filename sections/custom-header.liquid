@@ -1,0 +1,286 @@
+<header class="header">
+  <div class="main-container">
+    <div style="display: flex; align-items: center">
+      <div class="header-top">
+        <button class="toggle" onclick="toggleDrawer()">☰</button>
+        <a href="/" class="logo">
+          {% if section.settings.logo %}
+            <img src="{{ section.settings.logo | img_url:'300x' }}" alt="{{ shop.name }}" height="" width="">
+          {% else %}
+            {{ shop.name }}
+          {% endif %}
+        </a>
+      </div>
+
+      <nav class="nav">
+        <ul>
+          {% for item in linklists[section.settings.menu].links %}
+            <li class="nav-item {% if item.links.size > 0 %}has-menu{% endif %}">
+              <a href="{{ item.url }}">{{ item.title }}</a>
+              {% if item.links.size > 0 %}
+                <div class="mega">
+                  <div class="mega-inner">
+                    {% for col in item.links %}
+                      <div class="mega-col">
+                        <h4>
+                          <a href="{{ col.url }}">{{ col.title }}</a>
+                        </h4>
+                        {% if col.links.size > 0 %}
+                          {% for sub in col.links %}
+                            <div class="sub-sub-link">
+                              <a href="{{ sub.url }}">{{ sub.title }}</a>
+                              {% if sub.links.size > 0 %}
+                                <ul class="third-level">
+                                  {% for third in sub.links %}
+                                    <li>
+                                      <a href="{{ third.url }}">{{ third.title }}</a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+
+    <div id="drawer" class="drawer">
+      <div class="drawer-header">
+        <button onclick="toggleDrawer()">✕</button>
+      </div>
+      <ul>
+        {% for item in linklists[section.settings.menu].links %}
+          <li>
+            <details>
+              <summary>{{ item.title }}</summary>
+              {% if item.links.size > 0 %}
+                <ul>
+                  {% for sub in item.links %}
+                    <li>
+                      <details>
+                        <summary>{{ sub.title }}</summary>
+                        {% if sub.links.size > 0 %}
+                          <ul>
+                            {% for third in sub.links %}
+                              <li>
+                                <a href="{{ third.url }}">{{ third.title }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </details>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </details>
+          </li>
+        {% endfor %}
+        {% comment %}
+          <li><a href="/account">Account</a></li>
+          <li><a href="/cart">Cart</a></li>
+        {% endcomment %}
+      </ul>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "custom-Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "link_list", "id": "menu", "label": "Main Navigation" }
+  ]
+}
+{% endschema %}
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+  }
+  .toggle {
+    font-size: 24px;
+    background: none;
+    border: none;
+    display: none;
+    cursor: pointer;
+  }
+  .logo img {
+    max-height: 50px;
+  }
+  .search-wrap {
+    flex: 1;
+    margin: 0 20px;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .icons a {
+    margin-left: 16px;
+    font-size: 20px;
+    color: #333;
+  }
+  .nav {
+    background: #fff;
+  }
+  .nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-item {
+    margin: 0 20px;
+  }
+  .nav-item a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    transition: color 0.3s;
+    font-size: 14px;
+  }
+  .nav-item:hover > a {
+    color: #000;
+  }
+  .has-menu .mega {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0; 
+    width: 100%;
+    top: 100%;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  .has-menu:hover .mega {
+    display: block;
+  }
+  .mega-inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+  .mega-col {
+    flex: 1;
+    padding: 0 12px;
+  }
+  .mega-col h4 a {
+    color: #111;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .mega-col a {
+    color: #555;
+    font-size: 14px;
+    display: block;
+    margin: 4px 0;
+    text-decoration: none;
+  }
+  .mega-col a:hover {
+    color: #000;
+  }
+
+  /* Drawer */
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100vw;
+    max-width: 320px;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    padding: 24px;
+    transition: left 0.3s ease;
+    overflow: auto;
+  }
+  .drawer.active {
+    left: 0;
+  }
+  .drawer-header {
+    text-align: right;
+    margin-bottom: 24px;
+  }
+  .drawer-header button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .drawer details {
+    margin-bottom: 16px;
+  }
+  .drawer summary {
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .drawer ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .drawer ul li a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .drawer ul ul li a {
+    font-size: 14px;
+  }
+
+  .drawer ul ul {
+    padding-left: 16px;
+    list-style: none;
+  }
+  .drawer a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    margin: 6px 0;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 1024px) {
+    .toggle {
+      display: block;
+    }
+    .nav,
+    .search-wrap {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function toggleDrawer() {
+    document.getElementById('drawer').classList.toggle('active');
+  }
+</script>
