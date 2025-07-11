@@ -1,0 +1,9 @@
+{
+  "name": "Product Page",
+  "sections": {
+    "main": {
+      "type": "custom-product"
+    }
+  },
+  "order": ["main"]
+}
