@@ -1,5 +1,15 @@
 <section class="banner-section">
-  <div class="banner-content {{ section.settings.three_part }}">
+  <div class="banner-content {{ section.settings.three_part }} {{ section.settings.three_part }}">
+    {% for image in section.blocks %}
+      {% if section.settings.three_part == 'three-part' and image.settings.banner_image_2 != blank %}
+        <img
+          src="{{ image.settings.banner_image_2  | image_url: width: 951 }}"
+          alt="oval shape engagement ring"
+          width=""
+          height=""
+        >
+      {% endif %}
+    {% endfor %}
     {% for image in section.blocks %}
       {% if section.settings.three_part == 'three-part' and image.settings.banner_image_2 != blank %}
         <img
