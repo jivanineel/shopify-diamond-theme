@@ -1,0 +1,43 @@
+<section class="blog-list">
+  <div class="main-container">
+    blog
+    {% comment %} <div class="blog-list-contain">
+      {% for block in section.blocks %}
+        <div class="blog-list-item">
+          <div class="blog-list-image">
+            {% block.settings.blogs %}
+          </div>
+        </div>
+      {% endfor %}
+    </div> {% endcomment %}
+  </div>
+</section>
+
+{% comment %} {% schema %}
+{
+  "name": "Blog List",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "custom-blog",
+      "name": "Blog",
+      "settings": [
+        {
+          "type": "blog",
+          "label": "Blog",
+          "id": "blogs"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .blog-list-contain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+{% endstylesheet %} {% endcomment %}
