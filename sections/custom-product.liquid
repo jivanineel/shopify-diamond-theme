@@ -1,18 +1,395 @@
-<section class="about-page">
-  <div class="page-width">
-    <h1>About Us</h1>
-    <p>This is our story.</p>
+<section class="product-main">
+  <div class="main-container">
+    <div class="product-information">
+      <div class="product-viewing">
+        <div class="product-image-small">
+          {% for block in section.blocks %}
+            {% if block.settings.image_view %}
+              <img
+                src="{{ block.settings.image_view | image_url: width: 300 }}"
+                data-big-src="{{ block.settings.image_view | image_url: width: 1000 }}"
+                alt="{{ block.settings.image_view }}"
+                width="100"
+                height="100"
+                class="product-small-view"
+              >
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="product-image-big">
+          {% assign first_small = section.blocks | where: 'type', 'small-image' | first %}
+          {% if first_small.settings.image_view %}
+            <img
+              id="main-product-image"
+              src="{{ first_small.settings.image_view | image_url: width: 1000 }}"
+              alt="Main Product Image"
+              class="product-big-view"
+              width="100%"
+              height="100%"
+            >
+          {% endif %}
+        </div>
+      </div>
+      <div class="product-work-information">
+        {% for block in section.blocks %}
+          {% if block.settings.product_name %}
+            <h1 class="product-name">{{ block.settings.product_name }}</h1>
+          {% endif %}
+        {% endfor %}
+
+        {% for price in section.blocks %}
+          {% if price.settings.product_price %}
+            <div style="display:flex; align-items:center">
+              <p class="dollar-sign">$</p>
+              <p class="product-price">{{ price.settings.product_price }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <div class="product-size">
+          {% for size in section.blocks %}
+            {% if size.settings.product_size != blank %}
+              <div class="size-label">{{ size.settings.product_size }}</div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="product-quantity">
+          <button class="btn-outline btn-increase">+</button>
+          <input class="quantity-num" value="1" readonly>
+          <button class="btn-outline btn-decrease">-</button>
+        </div>
+
+        <button class="btn-dark">Place Order</button>
+      </div>
+    </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Custom About Section",
+  "name": "Custom Product Section",
   "settings": [],
+  "blocks": [
+    {
+      "type": "small-image",
+      "name": "Small Product Image",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_view",
+          "label": "Product Angle View"
+        }
+      ]
+    },
+    {
+      "type": "product_info",
+      "name": "Product Info",
+      "settings": [
+        {
+          "type": "richtext",
+          "label": "Product-Name",
+          "id": "product_name"
+        }
+      ]
+    },
+    {
+      "type": "product_size",
+      "name": "Product size",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Product-Size",
+          "id": "product_size"
+        }
+      ]
+    },
+    {
+      "type": "product_price",
+      "name": "Product price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "Product-price",
+          "id": "product_price"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "About Page"
+      "name": "Product Page"
     }
   ]
 }
 {% endschema %}
+
+{% stylesheet %}
+  .product-main {
+    padding: 50px 0 100px;
+  }
+
+  .product-information {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+  }
+
+  .product-name {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: normal;
+    color: #000;
+    margin-bottom: 30px;
+  }
+
+  .product-viewing {
+    display: flex;
+    gap: 16px;
+  }
+
+  .product-image-small {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    width: 150px;
+    gap: 10px;
+    max-height: 380px;
+    height: 100%;
+  }
+
+  .product-image-big {
+    overflow: hidden;
+    max-width: 500px;
+    width: 100%;
+    max-height: 500px;
+    border-radius: 6px;
+    cursor: crosshair;
+  }
+
+  .product-image-small img,
+  .product-big-view img {
+    border-radius: 6px;
+  }
+
+  /* .product-image-small img{
+    opacity: 0.2;
+  }
+
+  .product-image-small img.active{
+    opacity: 1;
+  } */
+
+  .product-big-view img {
+    max-width: 500px;
+    width: 100%;
+    max-height: 500px;
+    height: 100%;
+  }
+
+  .product-size {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .product-size .size-label {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 1;
+    border: 1px solid #000;
+    border-radius: 50%;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .product-size .size-label.active {
+    background: #000;
+    color: #fff;
+  }
+
+  .product-price,
+  .dollar-sign {
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #000;
+  }
+
+  .btn-outline {
+    border: 1px solid #d9d9d9;
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .quantity-num {
+    border: 1px solid #d9d9d9;
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .product-information .btn-dark {
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+
+  .product-quantity {
+    display: flex;
+    gap: 4px;
+  }
+
+  @media (max-width: 991px) {
+    .product-image-small {
+      flex-direction: row;
+      max-width: 407px;
+      width: 100%;
+      height: 115px;
+    }
+
+    .product-viewing {
+      flex-direction: column;
+    }
+
+    .product-information {
+      gap: 30px;
+    }
+
+    .product-price,
+    .product-name,
+    .dollar-sign {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .product-information {
+      gap: 20px;
+      flex-direction: column;
+    }
+
+    .product-image-big img {
+      max-width: 100%;
+    }
+
+    .product-price,
+    .product-name,
+    .dollar-sign {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .product-size .size-label {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .product-price,
+    .product-name,
+    .dollar-sign {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .product-size .size-label {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const sizeLabels = document.querySelectorAll('.product-size .size-label');
+
+    sizeLabels.forEach((label) => {
+      label.addEventListener('click', () => {
+        sizeLabels.forEach((el) => el.classList.remove('active'));
+        label.classList.add('active');
+      });
+    });
+
+    const quantityWrappers = document.querySelectorAll('.product-quantity');
+
+    quantityWrappers.forEach((wrapper) => {
+      const input = wrapper.querySelector('.quantity-num');
+      const increaseBtn = wrapper.querySelector('.btn-increase');
+      const decreaseBtn = wrapper.querySelector('.btn-decrease');
+      const priceElement = document.querySelector('.product-price');
+      let basePrice = parseFloat(priceElement.textContent.replace(/[^0-9.]/g, ''));
+
+      function updatePriceDisplay(quantity) {
+        const total = basePrice * quantity;
+        priceElement.textContent = `${total.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`;
+      } 
+
+      increaseBtn.addEventListener('click', () => {
+        let value = parseInt(input.value) || 0;
+        value++;
+        input.value = value;
+        updatePriceDisplay(value);
+      });
+
+      decreaseBtn.addEventListener('click', () => {
+        let value = parseInt(input.value) || 0;
+        if (value > 1) {
+          value--;
+          input.value = value;
+          updatePriceDisplay(value);
+        }
+      });
+    });
+
+    const smallImages = document.querySelectorAll('.product-small-view');
+    const bigImage = document.getElementById('main-product-image');
+
+    smallImages.forEach((img) => {
+      img.addEventListener('mouseenter', () => {
+        const newSrc = img.getAttribute('data-big-src');
+        bigImage.setAttribute('src', newSrc);
+      });
+    });
+
+    // Hover Zoom Effect for Big Image
+    const zoomContainer = document.querySelector('.product-image-big img');
+    const zoomImage = document.getElementById('main-product-image');
+    const scaleFactor = 2; // Adjust scale here
+
+    zoomContainer.addEventListener('mouseover', () => {
+      zoomImage.style.transform = `scale(${scaleFactor})`;
+      zoomImage.style.transition = 'transform 0.2s ease';
+    });
+
+    zoomContainer.addEventListener('mouseout', () => {
+      zoomImage.style.transform = 'scale(1)';
+      zoomImage.style.transformOrigin = 'center center';
+    });
+
+    zoomContainer.addEventListener('mousemove', (e) => {
+      const rect = zoomContainer.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      const originX = (offsetX / rect.width) * 100;
+      const originY = (offsetY / rect.height) * 100;
+      zoomImage.style.transformOrigin = `${originX}% ${originY}%`;
+    });
+  });
+{% endjavascript %}
