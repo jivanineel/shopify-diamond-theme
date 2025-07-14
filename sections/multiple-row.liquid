@@ -1,0 +1,181 @@
+<section class="multiple-row">
+  <div class="main-container">
+    <div class="multiple-column">
+      {% for block in section.blocks %}
+        <div class="multiple-row-item" style="flex-direction: {{block.settings.flex-direction}}">
+          {% if block.settings.multiple_row_image %}
+            <img
+              src="{{ block.settings.multiple_row_image  | image_url: width: 1000 }}"
+              alt="row_image"
+              width=""
+              height=""
+            >
+          {% endif %}
+
+          {% if block.settings.title != blank %}
+            <div class="multiple-row-content">
+              <div class="row-title">{{ block.settings.title }}</div>
+              <div class="row-descriptions">{{ block.settings.description }}</div>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Multiple Row",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "multiple-row",
+      "name": "Multiple Row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "multiple_row_image",
+          "label": "Multiple Row Image"
+        },
+        {
+          "type": "text",
+          "id": "title",    
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "select",
+          "id": "flex-direction",
+          "label": "Flex Direction",
+          "options": [
+            {
+              "value": "row",
+              "label": "Row"
+            },
+            {
+              "value": "column",
+              "label": "Column"
+            },
+            {
+              "value": "row-reverse",
+              "label": "Row Reverse"
+            },
+            {
+              "value": "column-reverse",
+              "label": "Column Reverse"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .multiple-row {
+    padding: 100px 0;
+  }
+
+  .multiple-column {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+  }
+
+  .multiple-row-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .row-title {
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .row-descriptions {
+    font-size: 16px;
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  .multiple-row-item img {
+    max-width: 625px;
+    width: 100%;
+  }
+
+  .multiple-row-content {
+    max-width: 625px;
+  }
+
+  @media (max-width: 1200px) {
+    .multiple-row-item img {
+      max-width: 520px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .multiple-row {
+      padding: 70px 0;
+    }
+
+    .multiple-row-item img {
+      max-width: 450px;
+    }
+
+    .multiple-column {
+      gap: 70px;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .multiple-row-item img {
+      max-width: 395px;
+    }
+  }
+  @media (max-width: 767px) {
+    .multiple-row {
+      padding: 50px 0;
+    }
+
+    .multiple-row-item img {
+      max-width: 100%;
+    }
+
+    .multiple-column {
+      gap: 50px;
+    }
+
+    .multiple-row-item {
+      flex-direction: column !important;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .multiple-row {
+      padding: 30px 0;
+    }
+
+    .multiple-column {
+      gap: 30px;
+    }
+
+    .row-title{
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .row-descriptions{
+        font-size: 14px;
+    }
+  }
+{% endstylesheet %}

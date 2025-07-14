@@ -356,12 +356,12 @@
     gap: 80px;
   }
 
-  .footer-links-group{
+  .footer-links-group {
     max-width: 140px;
     width: 100%;
   }
 
-  .footer-links-group:last-child{
+  .footer-links-group:last-child {
     max-width: 407px;
     width: 100%;
   }
@@ -447,25 +447,32 @@
     gap: 10px;
   }
 
-  .policy-links{
+  .policy-links {
     font-size: 14px;
     font-family: 'Satoshi', sans-serif;
   }
 
-  .footer-text{
+  .footer-text {
     font-size: 14px;
     font-family: 'Satoshi', sans-serif;
-
   }
 
-  @media (max-width: 991px){
+  @media (max-width: 991px) {
     .website-policy {
       flex-direction: column;
       gap: 20px;
     }
+
+    .policy-text{
+      text-align: center; 
+    }
   }
 
   @media (max-width: 767px) {
+    .footer{
+      padding: 40px 0 20px !important;
+    }
+
     .footer-link-groups {
       gap: 40px;
     }
@@ -474,22 +481,53 @@
       margin: 20px 0 !important;
     }
 
-    .footer-logo img{
+    .footer-logo img {
       max-width: 50px;
     }
   }
 
   @media (max-width: 575px) {
-    .footer-link-groups {
-      gap: 20px;
+    .footer{
+      padding: 20px 0 !important;
     }
 
-    .footer-link-group:last-child{
+    .footer-link-groups {
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .footer-link-group:last-child {
       width: 100%;
     }
 
-    .signup-data{
+    .website-policy{
+      gap: 10px;
+    }
+
+    .signup-data {
       margin: 16px 0 20px !important;
+    }
+
+    .footer-signup .btn-dark {
+      font-size: 12px;
+      padding: 10px 6px;
+    }
+
+    .email-field {
+      font-size: 12px;
+      padding: 10px 16px;
+    }
+
+    .footer-links a {
+      font-size: 12px !important;
+    }
+
+    .footer-div-head{
+      margin-bottom: 16px !important;
+    }
+
+    .footer-text{
+      font-size: 12px !important;
     }
   }
 {% endstylesheet %}

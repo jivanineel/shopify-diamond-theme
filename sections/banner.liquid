@@ -1,9 +1,19 @@
 <section class="banner-section">
-  <div class="banner-content">
+  <div class="banner-content {{ section.settings.three_part }}">
+    {% for image in section.blocks %}
+      {% if section.settings.three_part == 'three-part' and image.settings.banner_image_2 != blank %}
+        <img
+          src="{{ image.settings.banner_image_2  | image_url: width: 951 }}"
+          alt="oval shape engagement ring"
+          width=""
+          height=""
+        >
+      {% endif %}
+    {% endfor %}
     <div class="banner-mark">
       {% for block in section.blocks %}
         {% if block.settings.banner_title %}
-          <h1 class="banner-title" style="font-family: {{ block.settings.banner_title_font_family.family }};">
+          <h1 class="banner-title" style="font-family: {{ block.settings.banner_title_font_family.family }}">
             {{ block.settings.banner_title }}
           </h1>
           <p class="banner-description">{{ block.settings.banner_description }}</p>
@@ -21,21 +31,130 @@
         {% endif %}
       {% endfor %}
     </div>
-    <div>
-      <img
-        src="{{ 'hero-image-1.jpg' | asset_url }}"
-        alt="oval shape engagement ring"
-        width="951"
-        height=""
-      >
-    </div>
+    {% for image in section.blocks %}
+      {% if image.settings.banner_image_1 %}
+        <img
+          src="{{ image.settings.banner_image_1  | image_url: width: 951 }}"
+          alt="oval shape engagement ring"
+          width=""
+          height=""
+        >
+      {% endif %}
+    {% endfor %}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Banner",
-  "settings": [],
+  "settings": [
+    {
+      "type": "select",
+      "id": "three_part",
+      "label": "Three Part",
+      "options": [
+        {
+          "value": "three-part",
+          "label": "Three Part"
+        },
+        {
+          "value": "two-part",
+          "label": "Two Part"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background-color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text-color",
+      "label": "Text Color"
+    },
+    {
+      "type": "select",
+      "id": "text-align",
+      "label": "Text Align",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "flex-direction",
+      "label": "Flex Direction",
+      "options": [
+        {
+          "value": "row",
+          "label": "Row"
+        },
+        {
+          "value": "column",
+          "label": "Column"
+        },
+        {
+          "value": "row-reverse",
+          "label": "Row Reverse"
+        },
+        {
+          "value": "column-reverse",
+          "label": "Column Reverse"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "justify-content",
+      "label": "Justify Content",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Flex Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Flex End"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "align-items",
+      "label": "Align Items",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Flex Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Flex End"
+        }
+      ]
+    }
+  ],
   "blocks": [
     {
       "type": "banner_text",
@@ -60,12 +179,37 @@
       ]
     },
     {
+      "type": "banner_image_after",
+      "name": "Banner Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "banner_image_1",
+          "label": "Banner Image"
+        }
+      ]
+    },
+    {
+      "type": "banner_image_before",
+      "name": "Banner Image Before",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "banner_image_2",
+          "label": "Banner Image Before"
+        }
+      ]
+    },
+
+    {
       "type": "button",
       "name": "Button",
       "settings": [
         {
           "type": "text",
-          "id": "button_text",  
+          "id": "button_text",
           "label": "Button Text"
         },
         {
@@ -123,7 +267,6 @@
       ]
     }
   ],
-  "max_blocks": 2,
   "presets": [
     {
       "name": "Banner",
@@ -134,27 +277,50 @@
 }
 {% endschema %}
 
-{% stylesheet %}
+<style>
   .banner-section {
-    background: #faf5ef;
+    background: {{ section.settings.background-color }};
   }
 
+  .banner-mark h1{
+    color: {{ section.settings.text-color }};
+    text-align: {{section.settings.text-align}};
+  }
+
+  .banner-mark p{
+    color: {{ section.settings.text-color }};
+    text-align: {{section.settings.text-align}};
+  }
+
+  .banner-mark{
+    flex-direction: {{section.settings.flex-direction}};
+    align-items: {{section.settings.align-items}};
+    justify-content: {{section.settings.justify-content}};
+  }
+</style>
+
+{% stylesheet %}
   .banner-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: center;
   }
 
-  .banner-content img {
-    max-width: 100%;
+  .banner-content.three-part {
+    justify-content: space-between;
+  }
+
+  .banner-content.two-part img {
+    max-width: 50%;
     height: 100%;
+  }
+
+  .banner-content.three-part img {
+    max-width: 260px;
   }
 
   .banner-mark {
     max-width: 437px;
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
     margin: 0 auto;
   }
 
@@ -163,7 +329,6 @@
     font-size: 48px;
     line-height: 100%;
     font-weight: 400;
-    color: #1A0902;
   }
 
   .banner-mark p {
@@ -173,8 +338,8 @@
   }
 
   @media (max-width: 991px) {
-    .banner-content {
-      grid-template-columns: 1fr;
+    .banner-content.two-part {
+      flex-direction: column;
     }
 
     .banner-mark {
@@ -184,6 +349,10 @@
   }
 
   @media (max-width: 767px) {
+    .banner-content.three-part img {
+      max-width: 180px;
+    }
+
     .banner-mark h1 {
       margin-bottom: 10px;
       font-size: 40px;
@@ -193,6 +362,14 @@
     }
   }
   @media (max-width: 575px) {
+    .banner-content.three-part {
+      flex-direction: column;
+    }
+
+    .banner-content.three-part img {
+      height: 300px;
+      max-width: 100%;
+    }
     .banner-mark h1 {
       font-size: 36px;
     }
