@@ -3,7 +3,13 @@
   "sections": {
     "main": {
       "type": "custom-about"
+    },
+
+    "multiple-row": {
+      "type": "multiple-row",
+      "name": "Multiple Row",
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["main", "multiple-row"]
 }

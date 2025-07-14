@@ -1,0 +1,9 @@
+{
+  "name": "Blog Page",
+  "sections": {
+    "main": {
+      "type": "custom-blog"
+    },
+  },
+  "order": ["main"]
+}
