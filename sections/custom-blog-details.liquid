@@ -1,0 +1,30 @@
+<section>
+  <div class="main-container">
+    <h1 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
+      {{ section.settings.section_title }}
+    </h1>
+    <p class="section-sub-title" style="margin-bottom: {{ section.settings.sub-margin-bottom }}px">
+      {{ section.settings.section_sub_title }}
+    </p>
+    <div class="blog-list-contain">
+      {% for block in section.blocks %}
+        {% assign article = articles[block.settings.blog_article] %}
+        {% if article != blank %}
+          <div class="blog-list-item">
+            <div class="blog-list-image">
+              {% if article.image != blank %}
+                <img
+                  src="{{ article.image | image_url: width: 1000 }}"
+                  alt="{{ article.image.alt | escape }}"
+                  loading="lazy"
+                  width="100%"
+                  height="100%"
+                >
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
