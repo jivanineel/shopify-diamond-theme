@@ -1,30 +1,64 @@
-<section>
+<section class="blog-details">
   <div class="main-container">
-    <h1 class="section-title" style="margin-bottom: {{ section.settings.title-margin-bottom }}px">
-      {{ section.settings.section_title }}
-    </h1>
-    <p class="section-sub-title" style="margin-bottom: {{ section.settings.sub-margin-bottom }}px">
-      {{ section.settings.section_sub_title }}
-    </p>
-    <div class="blog-list-contain">
-      {% for block in section.blocks %}
-        {% assign article = articles[block.settings.blog_article] %}
-        {% if article != blank %}
-          <div class="blog-list-item">
-            <div class="blog-list-image">
-              {% if article.image != blank %}
-                <img
-                  src="{{ article.image | image_url: width: 1000 }}"
-                  alt="{{ article.image.alt | escape }}"
-                  loading="lazy"
-                  width="100%"
-                  height="100%"
-                >
-              {% endif %}
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% if article %}
+      {% if article.image %}
+        <div class="blog-details-image">
+          <img
+            src="{{ article.image | image_url: width: 1200 }}"
+            alt="{{ article.image.alt | escape }}"
+            loading="lazy"
+            width=""
+            height=""
+          >
+        </div>
+      {% endif %}
+
+      <h1 class="blog-details-title">{{ article.title }}</h1>
+
+      <div class="blog-details-meta">
+        Published on {{ article.published_at | date: '%B %d, %Y' }}
+        {% if article.author %} by {{ article.author }} {% endif %}
+      </div>
+
+      <div class="blog-details-content">
+        {{ article.content }}
+      </div>
+    {% else %}
+      <p style="color: red;">❌ Article object not available. This section must be used in an article template.</p>
+    {% endif %}
   </div>
 </section>
+
+{% stylesheet %}
+  .blog-details {
+    padding: 60px 0;
+  }
+  .blog-details-image img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+  }
+  .blog-details-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .blog-details-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  .blog-details-content {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333;
+  }
+  @media (max-width: 768px) {
+    .blog-details-title {
+      font-size: 28px;
+    }
+    .blog-details-content {
+      font-size: 16px;
+    }
+  }
+{% endstylesheet %}
