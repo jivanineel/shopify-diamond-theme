@@ -1,4 +1,4 @@
-<section class="blog-details">
+{% comment %} <section class="blog-details">
   <div class="main-container">
     {% if article %}
       {% if article.image %}
@@ -24,7 +24,7 @@
         {{ article.content }}
       </div>
     {% else %}
-      <p style="color: red;">❌ Article object not available. This section must be used in an article template.</p>
+      <p style="color: red;"> Article object not available. This section must be used in an article template.</p>
     {% endif %}
   </div>
 </section>
@@ -61,4 +61,11 @@
       font-size: 16px;
     }
   }
-{% endstylesheet %}
+{% endstylesheet %} {% endcomment %}
+
+
+<section class="blog-details">
+  <div class="main-container">
+    Blog details
+    </div>
+</section>
