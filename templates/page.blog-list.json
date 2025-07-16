@@ -1,0 +1,15 @@
+{
+  "name": "Blog List",
+  "sections": {
+    "main": {
+      "type": "blog-posts-list",
+      "settings": {
+        "selected_blog": "news",
+        "post_limit": 3
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

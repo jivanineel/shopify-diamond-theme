@@ -1,0 +1,53 @@
+{% schema %}
+{
+  "name": "Blog Posts List",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "selected_blog",
+      "label": "Choose Blog"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "Number of Posts",
+      "default": 3,
+      "min": 1,
+      "max": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Posts List",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign blog = blogs[section.settings.selected_blog] %}
+{% if blog != blank %}
+  <div class="blog-posts-wrapper">
+    {% for article in blog.articles limit: section.settings.post_limit %}
+      <div class="blog-post-item">
+        {% if article.image %}
+          <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title }}" width="" height="">
+        {% endif %}
+        <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+        <p>{{ article.excerpt | strip_html | truncate: 120 }}</p>
+        <a href="{{ article.url }}">Read More</a>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No blog selected or no posts found.</p>
+{% endif %}
+
+
+{% stylesheet %}
+  .blog-posts-wrapper{
+    display: flex;
+    justify-content: center;
+    gap: 20px;  
+  }
+{% endstylesheet %}
