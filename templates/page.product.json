@@ -1,9 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Product Page",
   "sections": {
     "main": {
-      "type": "custom-product"
+      "type": "custom-product",
+      "blocks": {
+        "small_image_zfAXtD": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-3.png"
+          }
+        },
+        "small_image_JKbLhE": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-1.png"
+          }
+        },
+        "small_image_TDjYqD": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-2.png"
+          }
+        }
+      },
+      "block_order": [
+        "small_image_zfAXtD",
+        "small_image_JKbLhE",
+        "small_image_TDjYqD"
+      ],
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
