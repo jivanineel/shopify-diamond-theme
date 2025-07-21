@@ -14,6 +14,11 @@
       "name": "Banner",
       "settings": {}
     },
+    "custom-section": {
+      "type": "custom-section",
+      "name": "Custom Section",
+      "settings": {}
+    },
     "shoping-jewellery": {
       "type": "shopping-jewellery",
       "name": "Shoping-jewellery",
@@ -82,6 +87,7 @@
     "in-stock-jewellery",
     "customer-review",
     "faq-section",
-    "follow-as-instagram"
+    "follow-as-instagram",
+    "custom-section"
   ]
 }

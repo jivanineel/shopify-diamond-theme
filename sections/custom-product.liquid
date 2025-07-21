@@ -24,7 +24,7 @@
               id="main-product-image"
               src="{{ first_small.settings.image_view | image_url: width: 1000 }}"
               alt="Main Product Image"
-              class="product-big-view"
+              class="product-big-view "
               width="100%"
               height="100%"
             >
@@ -52,15 +52,17 @@
             {% if size.settings.product_size != blank %}
               <div class="size-label">{{ size.settings.product_size }}</div>
             {% endif %}
+            {% if size.settings.product_size != blank %}
+              <div class="product-quantity">
+                <button class="btn-outline btn-increase">+</button>
+                <input class="quantity-num" value="1" readonly>
+                <button class="btn-outline btn-decrease">-</button>
+              </div>
+    
+              <button class="btn-dark">Place Order</button>
+            {% endif %}
           {% endfor %}
         </div>
-        <div class="product-quantity">
-          <button class="btn-outline btn-increase">+</button>
-          <input class="quantity-num" value="1" readonly>
-          <button class="btn-outline btn-decrease">-</button>
-        </div>
-
-        <button class="btn-dark">Place Order</button>
       </div>
     </div>
   </div>
@@ -339,7 +341,7 @@
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}`;
-      } 
+      }
 
       increaseBtn.addEventListener('click', () => {
         let value = parseInt(input.value) || 0;

@@ -1,0 +1,609 @@
+<section class="custom-section">
+  <div class="main-container">
+    {% for block in section.blocks %}
+      {% if block.settings.section_title != blank %}
+        <h1 class="heading heading-{{ block.id }}" {{ block.shopify_attributes }}>
+          {{ block.settings.section_title }}
+        </h1>
+      {% endif %}
+    {% endfor %}
+
+    {% for block in section.blocks %}
+      {% if block.type == 'flex-container' %}
+        <div class="flex-container" {{ block.shopify_attributes }}>
+          {% assign container_id = block.settings.flex_id %}
+
+          {% for child in section.blocks %}
+            {% if child.type == 'flex-item' and child.settings.parent_id == container_id %}
+              <div class="flex-item" {{ child.shopify_attributes }}>
+                {% if child.settings.flex_image %}
+                  <img
+                    src="{{ child.settings.flex_image | image_url: width: 1000 }}"
+                    alt=""
+                    width="{{ child.settings.flex_image_width }}"
+                    height="{{ child.settings.flex_image_height }}"
+                  >
+                {% endif %}
+                {% if child.settings.flex_text %}
+                  <div class="flex-item-content">
+                    <p>{{ child.settings.flex_text }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% for child in section.blocks %}
+            {% if child.type == 'image_marker'
+              and child.settings.random_image
+              and child.settings.parent_id == container_id
+            %}
+              <img
+                src="{{ child.settings.random_image | image_url: width: 1000 }}"
+                alt=""
+                {{ child.shopify_attributes }}
+                width="{{ child.settings.marker_image_width }}"
+                height="{{ child.settings.marker_image_width }}"
+              >
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% for grid in section.blocks %}
+      {% if grid.type == 'grid-container' %}
+        <div class="grid-container" {{ grid.shopify_attributes }}>
+          {% assign grid_id = grid.settings.grid_id %}
+
+          {% for grid_item in section.blocks %}
+            {% if grid_item.type == 'grid-item' and grid_item.settings.parent_id == grid_id %}
+              <div class="grid-item" {{ grid_item.shopify_attributes }}>
+                {% if grid_item.settings.grid_image %}
+                  <img src="{{ grid_item.settings.grid_image | image_url: width: 1000 }}" alt="" width="" height="">
+                {% endif %}
+                {% if grid_item.settings.grid_text %}
+                  <div class="grid-item-content">
+                    <p>{{ grid_item.settings.grid_text }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% for grid in section.blocks %}
+            {% if grid.type == 'grid_image_marker'
+              and grid.settings.grid_random_image
+              and grid.settings.parent_id == grid_id
+            %}
+              <img
+                src="{{ grid.settings.grid_random_image | image_url: width: 1000 }}"
+                alt=""
+                {{ grid.shopify_attributes }}
+                width="{{ grid.settings.grid_marker_image_width }}"
+                height="{{ grid.settings.grid_marker_image_height }}"
+              >
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="frequently-ask">
+      {% for block in section.blocks %}
+        {% if block.settings.question != blank %}
+          <div class="frequently-item">
+            {% if block.settings.question != blank %}
+              <div class="frequently-question" {{ block.shopify_attributes }}>
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%">
+                  <span>
+                    {{ block.settings.question }}
+                  </span>
+
+                  <img
+                    src="{{ 'faq-image.png' | asset_url }}"
+                    alt="faq-icon"
+                    width="30"
+                    height="30"
+                  >
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.answer != blank %}
+              <div class="frequently-answer" {{ block.shopify_attributes }}>
+                {{ block.settings.answer }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "custom-section",
+  "settings": [
+    {
+      "id": "background-color",
+      "type": "color",
+      "label": "Background color"
+    },
+    {
+      "id": "padding",
+      "type": "text",
+      "label": "Padding",
+      "info": "Padding: top right bottom left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom-text",
+      "name": "Custom Text",
+      "settings": [
+        { "id": "section_title", "type": "text", "label": "Section Title" },
+        { "id": "text-color", "type": "color", "label": "Text color" },
+        { "id": "margin-bottom", "type": "number", "label": "Margin bottom" },
+        {
+          "id": "text-align",
+          "type": "select",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        { "id": "font_family", "type": "font_picker", "label": "Font family", "default": "sans-serif" },
+        { "id": "font_size", "type": "number", "label": "Main Font size" },
+        { "id": "desktop_font_size", "type": "number", "label": "Desktop Font size" },
+        { "id": "tablet_font_size", "type": "number", "label": "Tablet Font size" },
+        { "id": "mobile_font_size", "type": "number", "label": "Mobile Font size" },
+        {
+          "id": "font_weight",
+          "type": "select",
+          "label": "Font weight",
+          "options": [
+            { "value": "300", "label": "300" },
+            { "value": "400", "label": "400" },
+            { "value": "500", "label": "500" },
+            { "value": "600", "label": "600" },
+            { "value": "700", "label": "700" },
+            { "value": "800", "label": "800" }
+          ]
+        },
+        { "id": "line_height", "type": "text", "label": "Line height" }
+      ]
+    },
+    {
+      
+      "type": "flex-container",
+      "name": "Flex Container",
+      "settings": [
+        { "id": "flex_id", "type": "text", "label": "Flex Container ID" },
+        {
+          "id": "flex-direction",
+          "type": "select",
+          "label": "Flex Direction",
+          "options": [
+            { "value": "row", "label": "Row" },
+            { "value": "row-reverse", "label": "Row Reverse" },
+            { "value": "column", "label": "Column" },
+            { "value": "column-reverse", "label": "Column Reverse" }
+          ]
+        },
+        { "id": "gap", "type": "number", "label": "Gap" },
+        {
+          "id": "justify-content",
+          "type": "select",
+          "label": "Justify Content",
+          "options": [
+            { "value": "flex-start", "label": "Flex Start" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Flex End" }
+          ]
+        },
+        {
+          "id": "align-items",
+          "type": "select",
+          "label": "Align Items",
+          "options": [
+            { "value": "flex-start", "label": "Flex Start" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Flex End" }
+          ]
+        },
+        {
+          "id": "flex_padding",
+          "type": "text",
+          "label": "Flex Padding",
+          "info": "Padding: top right bottom left"
+        }
+      ]
+    },
+    {
+      "type": "flex-item",
+      "name": "Flex Item",
+      "settings": [
+        { "id": "parent_id", "type": "text", "label": "Parent Flex Container ID" },
+        { "id": "flex_image", "type": "image_picker", "label": "Flex Item Image" },
+        { "id": "flex_text", "type": "text", "label": "Flex Item Text" },
+        {
+          "id": "flex_image_width",
+          "type": "text",
+          "label": "Flex Item Image Width",
+          "info": "100px or 100%"
+        },
+        {
+          "id": "flex_image_height",
+          "type": "text",
+          "label": "Flex Item Image height",
+          "info": "100px or 100%"
+        }
+      ]
+    },
+    {
+      "type": "grid-container",
+      "name": "Grid Container",
+      "settings": [
+        { "id": "grid_id", "type": "text", "label": "Grid Container ID" },
+        {
+          "id": "grid-template-columns",
+          "type": "text",
+          "label": "Grid Template Columns",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "grid-template-rows",
+          "type": "text",
+          "label": "Grid Template Rows",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "desktop_grid-template-columns",
+          "type": "text",
+          "label": "Desktop Grid Template Columns",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "desktop_grid-template-rows",
+          "type": "text",
+          "label": "Desktop Grid Template Rows",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "tablet_grid-template-columns",
+          "type": "text",
+          "label": "Tablet Grid Template Columns",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "tablet_grid-template-rows",
+          "type": "text",
+          "label": "Tablet Grid Template Rows",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "mobile_grid-template-columns",
+          "type": "text",
+          "label": "Mobile Grid Template Columns",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        {
+          "id": "mobile_grid-template-rows",
+          "type": "text",
+          "label": "Mobile Grid Template Rows",
+          "info": "grid-template-columns: repeat(3, 1fr); or 1fr 1fr 1fr"
+        },
+        { "id": "grid-gap", "type": "number", "label": "Grid Gap" },
+        {
+          "id": "grid_padding",
+          "type": "text",
+          "label": "grid Padding",
+          "info": "Padding: top right bottom left"
+        }
+      ]
+    },
+    {
+      "type": "grid-item",
+      "name": "Grid Item",
+      "settings": [
+        { "id": "parent_id", "type": "text", "label": "Parent Grid Container ID" },
+        { "id": "grid_image", "type": "image_picker", "label": "Grid Item Image" },
+        { "id": "grid_text", "type": "text", "label": "Grid Item Text" }
+      ]
+    },
+    {
+      "type": "image_marker",
+      "name": "Image Marker",
+      "settings": [
+        { "id": "random_image", "type": "image_picker", "label": "Image" },
+        { "id": "parent_id", "type": "text", "label": "Parent Flex Container ID" },
+        {
+          "id": "marker_image_width",
+          "type": "text",
+          "label": "marker Item Image Width",
+          "info": "100px or 100%"
+        },
+        {
+          "id": "marker_image_height",
+          "type": "text",
+          "label": "marker Item Image height",
+          "info": "100px or 100%"
+        }
+      ]
+    },
+    {
+      "type": "grid_image_marker",
+      "name": "Grid Image Marker",
+      "settings": [
+        { "id": "grid_random_image", "type": "image_picker", "label": "Image" },
+        { "id": "parent_id", "type": "text", "label": "Parent Flex Container ID" },
+        {
+          "id": "grid_marker_image_width",
+          "type": "text",
+          "label": "marker Item Image Width",
+          "info": "100px or 100%"
+        },
+        {
+          "id": "grid_marker_image_height",
+          "type": "text",
+          "label": "marker Item Image height",
+          "info": "100px or 100%"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Faq",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        },
+        {
+          "type": "number",
+          "id": "faq_gap",
+          "label": "FAQ Gap"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .custom-section {
+    background: {{ section.settings.background-color }};
+    padding: {{ section.settings.padding }};
+  }
+
+
+  {% for block in section.blocks %}
+    {% if block.type == 'custom-text' %}
+      .heading-{{ block.id }} {
+        color: {{ block.settings.text-color }};
+        text-align: {{ block.settings.text-align }};
+        font-family: {{ block.settings.font_family.family }};
+        font-size: {{ block.settings.font_size }}px;
+        font-weight: {{ block.settings.font_weight }};
+        line-height: {{ block.settings.line_height }};
+        margin-bottom: {{ block.settings.margin-bottom }}px;
+      }
+
+      @media screen and (max-width: 991px) {
+        .heading-{{ block.id }} {
+          font-size: {{ block.settings.desktop_font_size }}px;
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        .heading-{{ block.id }} {
+          font-size: {{ block.settings.tablet_font_size }}px;
+        }
+      }
+
+      @media screen and (max-width: 575px) {
+        .heading-{{ block.id }} {
+          font-size: {{ block.settings.mobile_font_size }}px;
+        }
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'flex-container' %}
+      .flex-container {
+        display: flex;
+        flex-direction: {{ block.settings.flex-direction }};
+        justify-content: {{ block.settings.justify-content }};
+        align-items: {{ block.settings.align-items }};
+        flex-wrap: wrap;
+        gap: {{ block.settings.gap }}px;
+        padding: {{ block.settings.flex_padding }}px;
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'flex-item' %}
+      .flex-container .flex-item{
+        background: {{ block.settings.background-color }};
+        border: {{ block.settings.border }};
+      }
+      .flex-item-content{
+        padding: {{ block.settings.flex-content-padding }}px;
+      }
+
+      .flex-container .flex-item p{
+        color: {{ block.settings.flex_text_color }};
+        font-family: {{ block.settings.flex_font_family.family }};
+        font-size: {{ block.settings.flex_font_size }}px;
+        font-weight: {{ block.settings.flex_font_weight }};
+        line-height: {{ block.settings.flex_font_line_height }};
+      }
+      @media screen and (max-width: 991px) {
+        .flex-container .flex-item p{
+          font-size: {{ block.settings.desktop_flex_font_size }}px;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        .flex-container .flex-item p{
+          font-size: {{ block.settings.tablet_flex_font_size }}px;
+        }
+      }
+      @media screen and (max-width: 575px) {
+        .flex-container .flex-item p{
+          font-size: {{ block.settings.mobile_flex_font_size }}px;
+        }
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'grid-container' %}
+      .grid-container{
+        display: grid;
+        grid-template-columns: {{ block.settings.grid-template-columns }};
+        grid-template-rows: {{ block.settings.grid-template-rows }};
+        gap: {{ block.settings.grid-gap }}px;
+        padding: {{ block.settings.grid_padding }}px;
+      }
+
+      @media screen and (max-width: 991px) {
+        .grid-container{
+          grid-template-columns: {{ block.settings.desktop_grid-template-columns }};
+          grid-template-rows: {{ block.settings.desktop_grid-template-rows }};
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        .grid-container{
+          grid-template-columns: {{ block.settings.tablet_grid-template-columns }};
+          grid-template-rows: {{ block.settings.tablet_grid-template-rows }};
+        }
+      }
+
+      @media screen and (max-width: 575px) {
+        .grid-container{
+          grid-template-columns: {{ block.settings.mobile_grid-template-columns }};
+          grid-template-rows: {{ block.settings.mobile_grid-template-rows }};
+        }
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'grid-item' %}
+      .grid-container .grid-item-content{
+        padding: {{ block.settings.grid-content-padding }}px;
+      }
+
+      .grid-container p{
+        color: {{ block.settings.grid_text_color }};
+        font-family: {{ block.settings.grid_font_family.family }};
+        font-size: {{ block.settings.grid_font_size }}px;
+        font-weight: {{ block.settings.grid_font_weight }};
+        line-height: {{ block.settings.grid_font_line_height }};
+      }
+
+      @media screen and (max-width: 991px) {
+        .grid-container p{
+          font-size: {{ block.settings.desktop_grid_font_size }}px;
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        .grid-container p{
+          font-size: {{ block.settings.tablet_grid_font_size }}px;
+        }
+      }
+
+      @media screen and (max-width: 575px) {
+        .grid-container p{
+          font-size: {{ block.settings.mobile_grid_font_size }}px;
+        }
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'faq' %}
+      .frequently-ask{
+        padding: {{ block.settings.faq_padding }}px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .frequently-ask .frequently-item {
+        margin-bottom: {{ block.settings.faq_gap }}px;
+      }
+    {% endif %}
+  {% endfor %}
+</style>
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.frequently-question').forEach(function (question) {
+      question.addEventListener('click', function () {
+        var currentItem = this.closest('.frequently-item');
+        var currentAnswer = currentItem.querySelector('.frequently-answer');
+        if (!currentAnswer) return;
+
+        // Close all other answers with animation
+        document.querySelectorAll('.frequently-answer').forEach(function (answer) {
+          if (answer !== currentAnswer) {
+            answer.style.overflow = 'hidden';
+            answer.style.transition = 'height 0.3s linear';
+            answer.style.height = answer.scrollHeight + 'px';
+            setTimeout(function () {
+              answer.style.height = '0px';
+            }, 10);
+            setTimeout(function () {
+              answer.style.display = 'none';
+              answer.style.height = '';
+              answer.style.transition = '';
+              answer.style.overflow = '';
+            }, 310);
+          }
+        });
+
+        // Toggle current answer with animation
+        if (currentAnswer.style.display === 'block') {
+          currentAnswer.style.overflow = 'hidden';
+          currentAnswer.style.transition = 'height 0.3s linear';
+          currentAnswer.style.height = currentAnswer.scrollHeight + 'px';
+          setTimeout(function () {
+            currentAnswer.style.height = '0px';
+          }, 10);
+          setTimeout(function () {
+            currentAnswer.style.display = 'none';
+            currentAnswer.style.height = '';
+            currentAnswer.style.transition = '';
+            currentAnswer.style.overflow = '';
+          }, 310);
+        } else {
+          currentAnswer.style.display = 'block';
+          currentAnswer.style.overflow = 'hidden';
+          currentAnswer.style.height = '0px';
+          currentAnswer.style.transition = 'height 0.3s linear';
+          setTimeout(function () {
+            currentAnswer.style.height = currentAnswer.scrollHeight + 'px';
+          }, 10);
+          setTimeout(function () {
+            currentAnswer.style.height = '';
+            currentAnswer.style.transition = '';
+            currentAnswer.style.overflow = '';
+          }, 310);
+        }
+      });
+    });
+  });
+{% endjavascript %}
