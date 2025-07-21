@@ -1,9 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Product Page",
   "sections": {
     "main": {
-      "type": "custom-product"
+      "type": "custom-product",
+      "blocks": {
+        "small_image_zfAXtD": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-3.png"
+          }
+        },
+        "small_image_JKbLhE": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-1.png"
+          }
+        },
+        "small_image_TDjYqD": {
+          "type": "small-image",
+          "settings": {
+            "image_view": "shopify://shop_images/gift-card-2.png"
+          }
+        },
+        "product_info_WML8gJ": {
+          "type": "product_info",
+          "settings": {
+            "product_name": "<p>diamond</p>"
+          }
+        },
+        "product_size_CGUteh": {
+          "type": "product_size",
+          "settings": {
+            "product_size": "s"
+          }
+        },
+        "product_size_LAcQEG": {
+          "type": "product_size",
+          "settings": {
+            "product_size": "m"
+          }
+        },
+        "product_size_xXXc7P": {
+          "type": "product_size",
+          "settings": {
+            "product_size": "l"
+          }
+        },
+        "product_price_PhGJzb": {
+          "type": "product_price",
+          "settings": {
+            "product_price": "30"
+          }
+        }
+      },
+      "block_order": [
+        "small_image_zfAXtD",
+        "small_image_JKbLhE",
+        "small_image_TDjYqD",
+        "product_info_WML8gJ",
+        "product_size_CGUteh",
+        "product_size_LAcQEG",
+        "product_size_xXXc7P",
+        "product_price_PhGJzb"
+      ],
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
