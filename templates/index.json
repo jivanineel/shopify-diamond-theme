@@ -35,7 +35,7 @@
     },
     "top-engagement-rings": {
       "type": "top-engagement-rings",
-      "name": "Top Engagement rings",
+      "name": "Top Engagement rings", 
       "settings": {
         "padding-top": 0,
         "padding-bottom": 0,

@@ -1,105 +1,82 @@
+{% assign open_container = null %}
 <section class="custom-section">
   <div class="main-container">
     {% for block in section.blocks %}
-      {% if block.settings.section_title != blank %}
-        <h1 class="heading heading-{{ block.id }}" {{ block.shopify_attributes }}>
-          {{ block.settings.section_title }}
-        </h1>
-      {% endif %}
-    {% endfor %}
+      {% case block.type %}
+        {% when 'custom-text' %}
+          {% if block.settings.section_title != blank %}
+            <h1 class="heading heading-{{ block.id }}" {{ block.shopify_attributes }}>
+              {{ block.settings.section_title }}
+            </h1>
+          {% endif %}
 
-    {% for block in section.blocks %}
-      {% if block.type == 'flex-container' %}
-        <div class="flex-container" {{ block.shopify_attributes }}>
-          {% assign container_id = block.settings.flex_id %}
+        {% when 'flex-container' %}
+          {% assign open_container = block.settings.flex_id %}
+          <div class="flex-container" data-id="{{ open_container }}" {{ block.shopify_attributes }}>
+        {% when 'flex-item' %}
+          {% if block.settings.parent_id == open_container %}
+            <div class="flex-item" {{ block.shopify_attributes }}>
+              {% if block.settings.flex_image %}
+                <img
+                  src="{{ block.settings.flex_image | image_url: width: 1000 }}"
+                  alt=""
+                  width="{{ block.settings.flex_image_width }}"
+                  height="{{ block.settings.flex_image_height }}"
+                >
+              {% endif %}
+              {% if block.settings.flex_text %}
+                <div class="flex-item-content">
+                  <p>{{ block.settings.flex_text }}</p>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
 
-          {% for child in section.blocks %}
-            {% if child.type == 'flex-item' and child.settings.parent_id == container_id %}
-              <div class="flex-item" {{ child.shopify_attributes }}>
-                {% if child.settings.flex_image %}
-                  <img
-                    src="{{ child.settings.flex_image | image_url: width: 1000 }}"
-                    alt=""
-                    width="{{ child.settings.flex_image_width }}"
-                    height="{{ child.settings.flex_image_height }}"
-                  >
-                {% endif %}
-                {% if child.settings.flex_text %}
-                  <div class="flex-item-content">
-                    <p>{{ child.settings.flex_text }}</p>
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
+        {% when 'image_marker' %}
+          {% if block.settings.parent_id == open_container %}
+            <img
+              src="{{ block.settings.random_image | image_url: width: 1000 }}"
+              alt=""
+              {{ block.shopify_attributes }}
+              width="{{ block.settings.marker_image_width }}"
+              height="{{ block.settings.marker_image_height }}"
+            >
+          {% endif %}
 
-          {% for child in section.blocks %}
-            {% if child.type == 'image_marker'
-              and child.settings.random_image
-              and child.settings.parent_id == container_id
-            %}
-              <img
-                src="{{ child.settings.random_image | image_url: width: 1000 }}"
-                alt=""
-                {{ child.shopify_attributes }}
-                width="{{ child.settings.marker_image_width }}"
-                height="{{ child.settings.marker_image_width }}"
-              >
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endfor %}
+        {% when 'grid-container' %}
+          {% assign open_container = block.settings.grid_id %}
+          <div class="grid-container" data-id="{{ open_container }}" {{ block.shopify_attributes }}>
+        {% when 'grid-item' %}
+          {% if block.settings.parent_id == open_container %}
+            <div class="grid-item" {{ block.shopify_attributes }}>
+              {% if block.settings.grid_image %}
+                <img src="{{ block.settings.grid_image | image_url: width: 1000 }}" alt="" width="" height="">
+              {% endif %}
+              {% if block.settings.grid_text %}
+                <div class="grid-item-content">
+                  <p>{{ block.settings.grid_text }}</p>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
 
-    {% for grid in section.blocks %}
-      {% if grid.type == 'grid-container' %}
-        <div class="grid-container" {{ grid.shopify_attributes }}>
-          {% assign grid_id = grid.settings.grid_id %}
+        {% when 'grid_image_marker' %}
+          {% if block.settings.parent_id == open_container %}
+            <img
+              src="{{ block.settings.grid_random_image | image_url: width: 1000 }}"
+              alt=""
+              {{ block.shopify_attributes }}
+              width="{{ block.settings.grid_marker_image_width }}"
+              height="{{ block.settings.grid_marker_image_height }}"
+            >
+          {% endif %}
 
-          {% for grid_item in section.blocks %}
-            {% if grid_item.type == 'grid-item' and grid_item.settings.parent_id == grid_id %}
-              <div class="grid-item" {{ grid_item.shopify_attributes }}>
-                {% if grid_item.settings.grid_image %}
-                  <img src="{{ grid_item.settings.grid_image | image_url: width: 1000 }}" alt="" width="" height="">
-                {% endif %}
-                {% if grid_item.settings.grid_text %}
-                  <div class="grid-item-content">
-                    <p>{{ grid_item.settings.grid_text }}</p>
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
-
-          {% for grid in section.blocks %}
-            {% if grid.type == 'grid_image_marker'
-              and grid.settings.grid_random_image
-              and grid.settings.parent_id == grid_id
-            %}
-              <img
-                src="{{ grid.settings.grid_random_image | image_url: width: 1000 }}"
-                alt=""
-                {{ grid.shopify_attributes }}
-                width="{{ grid.settings.grid_marker_image_width }}"
-                height="{{ grid.settings.grid_marker_image_height }}"
-              >
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endfor %}
-
-    <div class="frequently-ask">
-      {% for block in section.blocks %}
-        {% if block.settings.question != blank %}
+        {% when 'faq' %}
           <div class="frequently-item">
             {% if block.settings.question != blank %}
               <div class="frequently-question" {{ block.shopify_attributes }}>
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 100%">
-                  <span>
-                    {{ block.settings.question }}
-                  </span>
-
+                  <span>{{ block.settings.question }}</span>
                   <img
                     src="{{ 'faq-image.png' | asset_url }}"
                     alt="faq-icon"
@@ -115,9 +92,22 @@
               </div>
             {% endif %}
           </div>
+      {% endcase %}
+
+      {%- assign next_block = section.blocks[forloop.index] -%}
+      {% assign parent_types = 'flex-container,grid-container,custom-text,faq' | split: ',' %}
+      {% if next_block != null and parent_types contains next_block.type %}
+        {% if open_container %}
+          </div>
+          {% assign open_container = null %}
         {% endif %}
-      {% endfor %}
-    </div>
+      {% endif %}
+
+      {%- if forloop.last and open_container -%}
+        </div>
+        {% assign open_container = null %}
+      {%- endif -%}
+    {% endfor %}
   </div>
 </section>
 
@@ -177,7 +167,6 @@
       ]
     },
     {
-      
       "type": "flex-container",
       "name": "Flex Container",
       "settings": [
